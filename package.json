@@ -23,7 +23,11 @@
     "validate": "office-toolbox validate -m manifest.xml",
     "watch": "webpack --mode development --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "3.4.1",
+    "showdown": "^1.9.0",
+    "urijs": "^1.19.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/polyfill": "^7.4.4",
@@ -31,6 +35,8 @@
     "@types/office-js": "^1.0.19",
     "@types/office-runtime": "^1.0.8",
     "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.3",
     "file-loader": "^4.0.0",
