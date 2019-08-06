@@ -51,7 +51,7 @@
             <OfficeTab id="TabDefault">
               <Group id="msgReadGroup">
                 <Label resid="GroupLabel" />
-<!--                 <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                 <Control xsi:type="Button" id="msgReadOpenPaneButton">
                   <Label resid="TaskpaneButton.Label" />
                   <Supertip>
                     <Title resid="TaskpaneButton.Label" />
@@ -65,7 +65,7 @@
                   <Action xsi:type="ShowTaskpane">
                     <SourceLocation resid="Taskpane.Url" />
                   </Action>
-                </Control> -->
+                </Control>
                 <Control xsi:type="Button" id="ActionButton">
                   <Label resid="ActionButton.Label"/>
                   <Supertip>
@@ -95,15 +95,15 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html" />
-        <!-- <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html" /> -->
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Assitify Add-in"/>
-        <!-- <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/> -->
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
         <bt:String id="ActionButton.Label" DefaultValue="Discuss in Assistify"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <!-- <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/> -->
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
         <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
       </bt:LongStrings>
     </Resources>

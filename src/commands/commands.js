@@ -42,7 +42,6 @@ function getCurrentItem(accessToken) {
 }
 
 function postMail(item) {
-  console.log(item)
   var requestUrl = 'http://localhost:3002/api/v1/chat.postMessage';
   $.ajax({
     url: requestUrl,
@@ -63,7 +62,6 @@ function postMail(item) {
  * @param event {Office.AddinCommands.Event}
  */
 function action(event) {
-  console.log('In Action');
 
   Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
     if (result.status === "succeeded") {
@@ -85,7 +83,7 @@ function action(event) {
         Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
 
         // Be sure to indicate when the add-in command function is complete
-        event.completed();
+        //event.completed();
       }
     } else {
       console.log('Error');
