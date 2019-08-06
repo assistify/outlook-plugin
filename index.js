@@ -2,7 +2,7 @@ const connect = require('connect')
 const serveStatic = require('serve-static')
 const logger = console
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 
 connect()
   .use(serveStatic(__dirname + '/dist'))
