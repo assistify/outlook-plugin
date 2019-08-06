@@ -1,9 +1,9 @@
 {
-  "name": "office-addin-taskpane-js",
+  "name": "outlook-plugin",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OfficeDev/Office-Addin-TaskPane-JS.git"
+    "url": "https://github.com/assistify/outlook-plugin.git"
   },
   "license": "MIT",
   "config": {
@@ -16,7 +16,8 @@
     "build:dev": "webpack --mode development --https false",
     "build-dev": "webpack --mode development --https false && echo . && echo . && echo . && echo Please use 'build:dev' instead of 'build-dev'.",
     "dev-server": "webpack-dev-server --mode development",
-    "start": "office-addin-debugging start manifest.xml",
+    "start": "node index",
+    "start:default": "office-addin-debugging start manifest.xml",
     "start:desktop": "office-addin-debugging start manifest.xml desktop",
     "start:web": "office-addin-debugging start manifest.xml web",
     "stop": "office-addin-debugging stop manifest.xml",
@@ -24,10 +25,12 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "connect": "^3.7.0",
     "jquery": "3.4.1",
+    "office-addin-debugging": "^2.4.2",
+    "serve-static": "^1.14.1",
     "showdown": "^1.9.0",
-    "urijs": "^1.19.1",
-    "office-addin-debugging": "^2.4.2"
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -48,7 +51,7 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
-    "webpack": "^4.35.3",
+    "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
   }
