@@ -49,17 +49,14 @@ function login(baseUrl, email, password) {
     url: baseUrl+ 'login',
     dataType: 'json',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
     data: {
       'email': email,
       'password': password
     },
     async: false,
   });
-  const userId = response.responseJSON.body.data.userId
-  const authToken = response.responseJSON.body.data.authToken
+  const userId = response.responseJSON.data.userId
+  const authToken = response.responseJSON.data.authToken
   return {userId, authToken}
 }
 
@@ -71,15 +68,15 @@ function getRoom(baseUrl, name, {userId, authToken}) {
     headers: {
       'X-Auth-Token': authToken,
       'X-User-Id': userId,
-      'Accept': 'application/json'
     },
     data: {
       'roomName': name
-    }
+    },
+    async: false,
   });
-
-  if (response.responseJSON.body.success == true) {
-    response = response.responseJSON.body.channel
+  console.log(response)
+  if (response.responseJSON.success == true) {
+    response = response.responseJSON.channel
   }
   else {
     response = $.ajax({
@@ -93,9 +90,10 @@ function getRoom(baseUrl, name, {userId, authToken}) {
       },
       data: {
         'roomName': name
-      }
+      },
+      async: false,
     });
-    response = response.responseJSON.body.group
+    response = response.responseJSON.group
   }
 
   return response
@@ -111,9 +109,10 @@ function getParentRoomMembers(baseUrl, parent, {userId, authToken}) {
       'X-Auth-Token': authToken,
       'X-User-Id': userId,
       'Accept': 'application/json'
-    }
+    },
+    async: false,
   });
-  if (response.responseJSON.body.success === true) {
+  if (response.responseJSON.success === true) {
     return response.body.members.map(member => {
         return member.username;
     });
@@ -128,9 +127,10 @@ function getParentRoomMembers(baseUrl, parent, {userId, authToken}) {
         'X-Auth-Token': authToken,
         'X-User-Id': userId,
         'Accept': 'application/json'
-      }
+      },
+      async: false,
     });
-    return response.responseJSON.body.members.map(member => {
+    return response.responseJSON.members.map(member => {
         return member.username;
     });
   }
@@ -144,7 +144,6 @@ function createNewDiscussion(baseUrl, parentId, name, users, {userId, authToken}
     headers: {
       'X-Auth-Token': authToken,
       'X-User-Id': userId,
-      'Content-Type': 'application/json'
     },
     data: {
       'prid': parentId,
@@ -153,8 +152,7 @@ function createNewDiscussion(baseUrl, parentId, name, users, {userId, authToken}
     },
     async: false,
   });
-
-  return response.responseJSON.body.discussion
+  return response.responseJSON.discussion
 }
 
 
@@ -190,7 +188,20 @@ function action(event) {
       const item = getCurrentItem(accessToken)
       console.log(item)
       if (item) {
-        postMail(item);
+        // GET PARENT ROOM
+        const url = ''
+        const parent = ''
+        const email = ''
+        const password = ''
+
+        const {userId, authToken} = login(url, email, password);
+        const parentId = getRoom(url, parent, {userId, authToken})._id;
+        
+        // GET USERS
+        // CREATE DISCUSSION
+        const discussion = createNewDiscussion(url, parentId, 'test', [], {userId, authToken});
+        // SEND MESSAGE IN CHAT
+        postMail(url, discussion._id, item.BodyPreview, {userId, authToken})
         const message = {
           type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
           message: "Performed action.",
