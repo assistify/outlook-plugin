@@ -10,8 +10,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Assistify"/>
   <Description DefaultValue="Chat with Assistify"/>
-  <IconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assets/assistify.png"/>
-  <HighResolutionIconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assets/assistify.png"/>
+  <IconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
+  <HighResolutionIconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
   <SupportUrl DefaultValue="https://assistify.de"/>
   <AppDomains>
     <AppDomain>outlook-plugin.berlin.dbcs.db.de</AppDomain>
