@@ -40,22 +40,141 @@ function getCurrentItem(accessToken) {
   });
   return item.responseJSON;
 }
+// **********************
+// ROCKETCHAT API CALLS
+// **********************
 
-function postMail(item) {
-  var requestUrl = 'http://localhost:3002/api/v1/chat.postMessage';
-  $.ajax({
+function login(baseUrl, email, password) {
+  const response = $.ajax({
+    url: baseUrl+ 'login',
+    dataType: 'json',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: {
+      'email': email,
+      'password': password
+    },
+    async: false,
+  });
+  const userId = response.responseJSON.body.data.userId
+  const authToken = response.responseJSON.body.data.authToken
+  return {userId, authToken}
+}
+
+function getRoom(baseUrl, name, {userId, authToken}) {
+  let response = $.ajax({
+    url: baseUrl+'channels.info',
+    dataType: 'json',
+    method: 'GET',
+    headers: {
+      'X-Auth-Token': authToken,
+      'X-User-Id': userId,
+      'Accept': 'application/json'
+    },
+    data: {
+      'roomName': name
+    }
+  });
+
+  if (response.responseJSON.body.success == true) {
+    response = response.responseJSON.body.channel
+  }
+  else {
+    response = $.ajax({
+      url: baseUrl+'groups.info',
+      dataType: 'json',
+      method: 'GET',
+      headers: {
+        'X-Auth-Token': authToken,
+        'X-User-Id': userId,
+        'Accept': 'application/json'
+      },
+      data: {
+        'roomName': name
+      }
+    });
+    response = response.responseJSON.body.group
+  }
+
+  return response
+}
+
+function getParentRoomMembers(baseUrl, parent, {userId, authToken}) {
+  let requestUrl = baseUrl + 'channels.members';
+  let response = $.ajax({
+    url: requestUrl,
+    dataType: 'json',
+    method: 'GET',
+    headers: {
+      'X-Auth-Token': authToken,
+      'X-User-Id': userId,
+      'Accept': 'application/json'
+    }
+  });
+  if (response.responseJSON.body.success === true) {
+    return response.body.members.map(member => {
+        return member.username;
+    });
+  }
+  else {
+    requestUrl = baseUrl + 'groups.members';
+    response = $.ajax({
+      url: requestUrl,
+      dataType: 'json',
+      method: 'GET',
+      headers: {
+        'X-Auth-Token': authToken,
+        'X-User-Id': userId,
+        'Accept': 'application/json'
+      }
+    });
+    return response.responseJSON.body.members.map(member => {
+        return member.username;
+    });
+  }
+}
+
+function createNewDiscussion(baseUrl, parentId, name, users, {userId, authToken}) {
+  const response = $.ajax({
+    url: baseUrl+ 'rooms.createDiscussion',
+    dataType: 'json',
+    method: 'POST',
+    headers: {
+      'X-Auth-Token': authToken,
+      'X-User-Id': userId,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      'prid': parentId,
+      't_name': name,
+      'users': users
+    },
+    async: false,
+  });
+
+  return response.responseJSON.body.discussion
+}
+
+
+function postMail(baseUrl, roomId, text, {userId, authToken}) {
+  const requestUrl = baseUrl + 'chat.postMessage';
+  const response = $.ajax({
     url: requestUrl,
     dataType: 'json',
     method: 'POST',
     headers: {
-      'X-Auth-Token': 'Sokxuv9QQ74si3BsDoaZeKKuucYz-DS1k6v8KR12qVG',
-      'X-User-Id': 'Rz4QJxhjNiwPc78fi',
+      'X-Auth-Token': authToken,
+      'X-User-Id': userId,
     },
     data: {
-      'roomId': 'Rz4QJxhjNiwPc78fiRz4QJxhjNiwPc78fi',
-      'text': item.BodyPreview
+      'roomId': roomId,
+      'text': text
     }
   });
+
+  return response.responseJSON
 }
 /**
  * Shows a notification when the add-in command is executed.
