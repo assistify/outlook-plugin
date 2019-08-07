@@ -19,7 +19,6 @@ COPY --from=builder /app/dist /app/dist
 ADD index.js /app/index.js
 ADD package.json /app/package.json
 ADD assets /app/assets
-ADD manifest.xml /app/manifest.xml
 RUN npm install --production
 
 CMD npm start

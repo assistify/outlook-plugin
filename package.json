@@ -17,11 +17,11 @@
     "build-dev": "webpack --mode development --https false && echo . && echo . && echo . && echo Please use 'build:dev' instead of 'build-dev'.",
     "dev-server": "webpack-dev-server --mode development",
     "start": "node index",
-    "start:default": "office-addin-debugging start manifest.xml",
-    "start:desktop": "office-addin-debugging start manifest.xml desktop",
-    "start:web": "office-addin-debugging start manifest.xml web",
-    "stop": "office-addin-debugging stop manifest.xml",
-    "validate": "office-toolbox validate -m manifest.xml",
+    "start:default": "office-addin-debugging start assets/manifest.xml",
+    "start:desktop": "office-addin-debugging start assets/manifest.xml desktop",
+    "start:web": "office-addin-debugging start assets/manifest.xml web",
+    "stop": "office-addin-debugging stop assets/manifest.xml",
+    "validate": "office-toolbox validate -m assets/manifest.xml",
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
