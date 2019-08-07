@@ -1,4 +1,4 @@
-import { isConstructorDeclaration } from "typescript";
+import _ from 'jquery';
 
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
