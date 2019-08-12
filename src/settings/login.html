@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>Settings</title>
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
@@ -17,30 +17,67 @@
     <script type="text/javascript" src="../../node_modules/core-js/client/core.js"></script>
     <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../helper/config.js"></script>
+    <link rel="stylesheet" type="text/css" href="login.css">
 
 </head>
 
 <body>
     <main>
-        <section>
-            <div>
-                <input id="server" type="text" value="" placeholder="Server" />
+        <header class="header">
+            <img width="90" height="90" src="../../assets/assistify.png" alt="Assistify" title="Assistify" />
+        </header>
+        <section class="login-area">
+            <div class="view default" id="url">
+                <div class="input input__wrapper">
+                    <input class="input__elememt" id="server" type="text" value="" autocapitalize="off"
+                        autocorrect="off" placeholder="Server URL https://" />
+                    <div class="error-display"></div>
+                </div>
+                <div class="button-group">
+                    <button class="button button__primary" id="navToLogin">
+                        <span>Next</span>
+                    </button>
+                </div>
             </div>
-            <div>
-                <input id="username" type="text" value="" placeholder="Email or username" />
+            <div class="view hide" id="login">
+                <div class="input input__wrapper">
+                    <input class="input__elememt" id="username" type="text" value="" placeholder="Username" />
+                    <div class="error-display"></div>
+                </div>
+                <div class="input input__wrapper">
+                    <input class="input__elememt" id="password" type="password" value="" placeholder="Password" />
+                </div>
+                <div class="button-group">
+                    <button class="button button__primary" id="connect">
+                        <span>Connect</span>
+                    </button>
+                    <button class="button button__secondary" id="backToUrl">
+                        <span>Back</span>
+                    </button>
+                </div>
             </div>
-            <div>
-                <input id="password" type="password" value="" placeholder="Password" />
-            </div>
-            <div>
-                <button id="connect">
-                    <span>Connect</span>
-                </button>
+
+
+            <div class="view hide" id='rooms'>
+                <div class="list-title">Choose a channel to post the mail</div>
+                <div id="room-list" class="rooms-container">
+                    <ul id="room-list-picker">
+                    </ul>
+                </div>
+                <div class="button-group">
+                    <button class="button button__primary" id="save">
+                        <span>Save</span>
+                    </button>
+                    <button class="button button__secondary" id="cancel">
+                        <span>Cancel</span>
+                    </button>
+                </div>
             </div>
         </section>
+
     </main>
     <script type="text/javascript" src="login.js"></script>
-    <script type="text/javascript" src="../apis/login.js"></script>
+    <script type="text/javascript" src="../helper/login.js"></script>
 </body>
 
 </html>

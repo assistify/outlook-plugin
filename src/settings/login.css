@@ -1,0 +1,131 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.header {
+    padding: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+}
+
+.view {}
+
+.view.hide {
+    display: none;
+}
+
+.input {
+    position: relative;
+    width: 100%;
+
+}
+
+.input__wrapper {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+
+.input__elememt {
+    width: 100%;
+    height: 2.5rem;
+    text-overflow: ellipsis;
+    border-width: 2px;
+    border-color: #e1e5e8;
+    border-radius: 2px;
+    background-color: transparent;
+    line-height: normal;
+    box-sizing: border-box;
+    border-style: solid;
+    padding: 0 1rem;
+}
+
+
+.login-area {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+
+    border-radius: 2px;
+    box-shadow: 0 0 2px 0 rgba(47, 52, 61, 0.08), 0 0 12px 0 rgba(47, 52, 61, 0.12);
+}
+
+.button-group {
+    flex-direction: column;
+    display: flex;
+
+}
+
+.button {
+    border: 0px;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.button__primary {
+    background-color: #d4145a;
+    color: #fff;
+}
+
+.button__secondary {
+    background-color: white;
+    color: black;
+}
+
+
+.selected {
+    background-color: green;
+    border: 0px;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.rooms-container {
+    height: 30vh;
+    margin-top: 10px;
+    border: 1px solid #d2d2d2;
+    overflow-y: auto;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+}
+
+.listitem {
+    overflow: hidden;
+    display: list-item;
+    text-overflow: ellipsis;
+    border-width: 2px;
+    border-color: #e1e5e8;
+    border-radius: 2px;
+    background-color: transparent;
+    line-height: 2em;
+    box-sizing: border-box;
+    border-style: solid;
+    padding: 0 1rem;
+}
+
+.listitem:hover {
+    background-color: #f3f3f3 !important;
+
+}
+
+ul {
+    padding: 0px;
+    list-style: none;
+    display: inline;
+}
