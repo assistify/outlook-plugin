@@ -11,7 +11,7 @@ function showConfigDialog(event) {
   // Not Configured: Show the configuration dialog
   configEvent = event;
   var url = new URI('../src/settings/login.html').absoluteTo(window.location).toString();
-  var dialogOptions = { width: 20, height: 40, displayInIframe: true };
+  var dialogOptions = { width: 40, height: 60, displayInIframe: true };
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
     loginDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogMessageReceived, processMessage);
@@ -37,8 +37,8 @@ function dialogClosed(message) {
 
 
 function isValidConfig(config) {
-  return true;
-  //config && config.server && config.userId && config.authToken;
+  return false;
+  //return config && config.server && config.userId && config.authToken ;
 }
 
 function getItemRestId() {
@@ -67,30 +67,31 @@ function forward(event) {
   if (!isValidConfig(config)) {
     showConfigDialog(event);
   } else {
+  }
+  // Get the access token
+  Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
+    if (result.status === "succeeded") {
+      var accessToken = result.value;
 
-    // Get the access token
-    Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
-      if (result.status === "succeeded") {
-        var accessToken = result.value;
+      // Get Mail REST Id
+      var itemId = getItemRestId();
 
-        // Get Mail REST Id
-        var itemId = getItemRestId()
-
-        // Read the mail item
+      // Read the mail item
+      try {
         getItem(accessToken, itemId, function (response, error) {
           if (error) {
-            showError(error)
+            showError(error);
           } else {
             sendMessage(config, function (response, error) {
               if (error) {
                 showError(error);
               } else {
-                const message = {
+                var message = {
                   type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
                   message: "Performed action.",
                   icon: "Icon.80x80",
                   persistent: true
-                }
+                };
 
                 // Show a notification message
                 Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
@@ -101,19 +102,21 @@ function forward(event) {
             });
           }
         });
-      } else {
-        showError();
+      } catch (error) {
+        showError(error);
       }
-    });
+    } else {
+      showError();
+    }
+  });
 
 
-  }
+
 }
 
 function showError(error) {
   console.log(error);
 }
-
 
 function getGlobal() {
   return (typeof self !== "undefined") ? self :
@@ -122,7 +125,7 @@ function getGlobal() {
         undefined;
 }
 
-const g = getGlobal();
+var g = getGlobal();
 
 // the add-in command functions need to be available in global scope
 g.forward = forward;
