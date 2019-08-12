@@ -4,6 +4,7 @@ function getConfiguration() {
         server: Office.context.roamingSettings.get('server'),
         userId: Office.context.roamingSettings.get('userId'),
         authToken: Office.context.roamingSettings.get('authToken'),
+        channel: Office.context.roamingSettings.get('channel')
     };
 }
 
@@ -11,6 +12,7 @@ function setConfiguration(config,  callback) {
     Office.context.roamingSettings.set('server', config.server);
     Office.context.roamingSettings.set('userId', config.userId);
     Office.context.roamingSettings.set('authToken', config.authToken);
+    Office.context.roamingSettings.set('channel', config.channel);
     Office.context.roamingSettings.saveAsync(callback);
 }
 
