@@ -37,10 +37,7 @@ module.exports = async (env, options) => {
         },
         {
           test: /\.(png|jpg|jpeg|gif)$/,
-          loader: "file-loader",
-          options: {
-            outputPath: 'assets'
-          },
+          use: "file-loader",
         }
       ]
     },
