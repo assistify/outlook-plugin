@@ -69,7 +69,7 @@ function buildChannelsList(parent, channels, callback) {
       .text(channel.name)
       .appendTo(item);
 
-    item.on('click', { channel: $('#' + channel.name).val() }, callback);
+    item.on('click', { channel: $('#' + channel._id).val() }, callback);
   });
 
 }
