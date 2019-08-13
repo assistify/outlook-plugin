@@ -62,7 +62,7 @@ function buildChannelsList(parent, channels, callback) {
     var item = $('<div>')
       .attr('id', channel._id)
       .addClass('listitem')
-      .val(channel._id)
+      .val(channel.name)
       .appendTo(list);
 
     var text = $('<label>')
