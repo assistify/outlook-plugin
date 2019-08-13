@@ -23,9 +23,9 @@ function logout(config, callback) {
   $.ajax({
     url: url,
     method: 'POST',
-    data: {
-      user: config.user,
-      password: config.password,
+    headers: {
+      'X-Auth-Token': config.authToken,
+      'X-User-Id': config.userId,
     },
   }).done(function (response) {
     callback(response);

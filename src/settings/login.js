@@ -65,12 +65,12 @@
             var url = '#url';
             showView(url);
 
-            if(config.authToken && config.userId) {
-                logout(config, function(response, error) {
-                    if(error) {
-                        console.log('Logout failed');
+            if (config.authToken && config.userId) {
+                logout(config, function (response, error) {
+                    if (error) {
+                        console.log('Logout failed' + error);
                     } else {
-                        console.log('Logout Succesful');
+                        console.log('Logout Succesful' + response);
                     }
                 });
             }
