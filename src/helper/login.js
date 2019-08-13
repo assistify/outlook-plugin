@@ -47,7 +47,7 @@ function buildChannelsList(parent, channels, callback) {
       .appendTo(list);
 
     var text = $('<label>')
-      .text(channel._id)
+      .text(channel.name)
       .appendTo(item);
 
     item.on('click', { channel: $('#' + channel._id).val() }, callback);
