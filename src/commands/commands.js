@@ -24,11 +24,10 @@ function processMessage(message) {
   setConfiguration(config, function (result) {
     loginDialog.close();
     loginDialog = null;
-    configEvent.completed();
-    configEvent = null;
+    // Implicitly invoke the send message function
+    sendMessage(configEvent);
   });
-  // send Message to Assistify
-  sendMessage(event);
+
 }
 
 function dialogClosed(message) {
