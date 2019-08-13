@@ -62,8 +62,18 @@
 
         $('#cancel').on('click', function () {
             //Logout here..
-            var login = '#login';
-            showView(login);
+            var url = '#url';
+            showView(url);
+
+            if(config.authToken && config.userId) {
+                logout(config, function(response, error) {
+                    if(error) {
+                        console.log('Logout failed');
+                    } else {
+                        console.log('Logout Succesful');
+                    }
+                });
+            }
         });
 
         $('#navToLogin').on('click', function () {

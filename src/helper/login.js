@@ -16,6 +16,25 @@ function login(config, callback) {
   });
 }
 
+function logout(config, callback) {
+  
+  var url = config.server + '/api/v1/logout';
+
+  $.ajax({
+    url: url,
+    method: 'POST',
+    data: {
+      user: config.user,
+      password: config.password,
+    },
+  }).done(function (response) {
+    callback(response);
+  }).fail(function (error) {
+    callback(null, error);
+  });
+}
+
+
 function getJoinedChannels(config, callback) {
 
   var url = config.server + '/api/v1/channels.list.joined';
