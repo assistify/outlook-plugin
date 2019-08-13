@@ -23,7 +23,7 @@ function getItem(accessToken, itemId, callback) {
     });
 }
 
-function getRoom(config, roomName, callback) {
+function getRoom(config, callback) {
   var url = config.server + '/api/v1/channels.info';
   $.ajax({
     url: url,
@@ -34,7 +34,7 @@ function getRoom(config, roomName, callback) {
       'X-User-Id': config.userId,
     },
     data: {
-      roomName: roomName,
+      roomName: config.channel || 'general',
     },
   }).done(function (response) {
     callback(response);
@@ -69,7 +69,7 @@ function createNewDiscussion(config, discussion, callback) {
 
 function sendMessage(config, callback) {
   // Get the room in which the mail will posted.
-  getRoom(config, 'general', function (response, error) {
+  getRoom(config, function (response, error) {
     if (error) {
       callback(null, error);
     } else {
