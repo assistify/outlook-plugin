@@ -27,6 +27,8 @@ function processMessage(message) {
     configEvent.completed();
     configEvent = null;
   });
+  // send Message to Assistify
+  sendMessage(event);
 }
 
 function dialogClosed(message) {
@@ -67,7 +69,11 @@ function forward(event) {
   if (!isValidConfig(config)) {
     showConfigDialog(event);
   } else {
+    sendMessage(event);
   }
+}
+
+function sendMessage(event) {
   // Get the access token
   Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
     if (result.status === "succeeded") {
@@ -109,9 +115,6 @@ function forward(event) {
       showError();
     }
   });
-
-
-
 }
 
 function showError(error) {
