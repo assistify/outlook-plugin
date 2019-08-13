@@ -71,7 +71,7 @@ function sendMessage(config, callback) {
   // Get the room in which the mail will posted.
   getRoom(config, 'general', function (response, error) {
     if (error) {
-      showError(error);
+      callback(null, error);
     } else {
       var discussion = {
         parentId: response.channel._id,
@@ -81,7 +81,7 @@ function sendMessage(config, callback) {
       //Create a new channel
       createNewDiscussion(config, discussion, function (response, error) {
         if (error) {
-
+          callback(null, error);
         } else {
           console.log(response);
           callback(response);
