@@ -10,7 +10,7 @@ Office.onReady(info => {
 function showConfigDialog(event) {
   // Not Configured: Show the configuration dialog
   configEvent = event;
-  var url = new URI('../src/settings/login.html').absoluteTo(window.location).toString();
+  var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
   var dialogOptions = { width: 40, height: 60, displayInIframe: true };
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
