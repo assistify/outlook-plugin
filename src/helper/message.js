@@ -107,7 +107,7 @@ function postEMail(config, mail, callback) {
           'X-User-Id': config.userId,
         },
         data: {
-          'roomId': roomId,
+          'roomId': response.rid,
           'text': mail.Body.Content
         }
       }).done(function (response) {
