@@ -25,7 +25,7 @@ function processMessage(message) {
     loginDialog.close();
     loginDialog = null;
     // Implicitly invoke the send message function
-    sendMessage(configEvent);
+    send(configEvent);
   });
 
 }
@@ -68,11 +68,11 @@ function forward(event) {
   if (!isValidConfig(config)) {
     showConfigDialog(event);
   } else {
-    sendMessage(event);
+    send(event);
   }
 }
 
-function sendMessage(event) {
+function send(event) {
   // Get the access token
   Office.context.mailbox.getCallbackTokenAsync({ isRest: true }, function (result) {
     if (result.status === "succeeded") {
