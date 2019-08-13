@@ -97,9 +97,9 @@ function postEMail(config, mail, callback) {
     if (error) {
       callback(error);
     } else {
-      const requestUrl = config.server + '/api/v1/rooms/chat.postMessage';
+      const url = config.server + '/api/v1/chat.postMessage';
       $.ajax({
-        url: requestUrl,
+        url: url,
         dataType: 'json',
         method: 'POST',
         headers: {
