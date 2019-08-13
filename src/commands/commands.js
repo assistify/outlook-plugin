@@ -87,9 +87,10 @@ function send(event) {
           if (error) {
             showError(error);
           } else {
-            sendMessage(config, function (response, error) {
+            var mail = response;
+            postEMail(config, mail, function (response, error) {
               if (error) {
-                showError(error);
+                // show error
               } else {
                 var message = {
                   type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
@@ -100,10 +101,9 @@ function send(event) {
 
                 // Show a notification message
                 Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
-
-                // Be sure to indicate when the add-in command function is complete
-                event.completed();
               }
+              // Be sure to indicate when the add-in command function is complete
+              event.completed();
             });
           }
         });

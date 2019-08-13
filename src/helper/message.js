@@ -67,7 +67,7 @@ function createNewDiscussion(config, discussion, callback) {
 
 
 
-function sendMessage(config, callback) {
+function createDiscussion(config, mail, callback) {
   // Get the room in which the mail will posted.
   getRoom(config, function (response, error) {
     if (error) {
@@ -75,7 +75,7 @@ function sendMessage(config, callback) {
     } else {
       var discussion = {
         parentId: response.channel._id,
-        name: 'Testing',
+        name: mail.Subject,
         members: []
       };
       //Create a new channel
@@ -83,12 +83,43 @@ function sendMessage(config, callback) {
         if (error) {
           callback(null, error);
         } else {
-          console.log(response);
           callback(response);
         }
       });
     }
   });
+}
+
+
+function postEMail(config, mail, callback) {
+
+  createDiscussion(config, mail, function (response, error) {
+    if (error) {
+      callback(error);
+    } else {
+      const requestUrl = config.server + '/api/v1/rooms/chat.postMessage';
+      $.ajax({
+        url: requestUrl,
+        dataType: 'json',
+        method: 'POST',
+        headers: {
+          'X-Auth-Token': config.authToken,
+          'X-User-Id': config.userId,
+        },
+        data: {
+          'roomId': roomId,
+          'text': mail.Body.Content
+        }
+      }).done(function (response) {
+        callback(response);
+      }).fail(function (error) {
+        callback(null, error);
+      });
+    }
+  });
+
+
+
 }
 
 /* function getRoom(baseUrl, name, { userId, authToken }) {
@@ -167,22 +198,5 @@ function getParentRoomMembers(baseUrl, parent, { userId, authToken }) {
 
 
 
-function postMail(baseUrl, roomId, text, { userId, authToken }) {
-    const requestUrl = baseUrl + 'chat.postMessage';
-    const response = $.ajax({
-        url: requestUrl,
-        dataType: 'json',
-        method: 'POST',
-        headers: {
-            'X-Auth-Token': authToken,
-            'X-User-Id': userId,
-        },
-        data: {
-            'roomId': roomId,
-            'text': text
-        }
-    });
 
-    return response.responseJSON
-}
  */
