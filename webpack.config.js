@@ -71,18 +71,12 @@ module.exports = async (env, options) => {
           from: "./src/settings/login.css"
         }
       ]),
-      new CopyWebpackPlugin([
+       new CopyWebpackPlugin([
         {
           to: "helper/",
           from: "./src/helper/"
         }
-      ]),
-      new CopyWebpackPlugin([
-        {
-          to: "assets",
-          from: "./assets"
-        }
-      ]),
+      ]), 
       new CopyWebpackPlugin([
         {
           to: "./",
