@@ -32,7 +32,6 @@
                     if (response.status === 'error') {
                         showError(error);
                     } else {
-                        console.log(response);
                         config.server = server;
                         config.userId = response.data.userId;
                         config.authToken = response.data.authToken;
@@ -50,13 +49,11 @@
         });
 
         function onRoomSelected(e) {
-            console.log(e);
             config.channel = e.data.channel;
         }
 
 
         $('#save').on('click', function (e) {
-            console.log(config);
             sendMessageToHost(JSON.stringify(config));
         });
 
@@ -68,9 +65,9 @@
             if (config.authToken && config.userId) {
                 logout(config, function (response, error) {
                     if (error) {
-                        console.log('Logout failed' + error);
+                       // Error handling
                     } else {
-                        console.log('Logout Succesful' + response);
+                        console.log('Logout Success');
                     }
                 });
             }

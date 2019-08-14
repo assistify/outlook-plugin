@@ -117,7 +117,7 @@ function send(event) {
 }
 
 function showError(error) {
-  console.log(error);
+ // To Do Error display
 }
 
 function getGlobal() {
