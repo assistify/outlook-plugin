@@ -10,8 +10,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Assistify"/>
   <Description DefaultValue="Chat with Assistify"/>
-  <IconUrl DefaultValue="https://localhost:3000/assistify.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assistify.png"/>
+  <IconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
+  <HighResolutionIconUrl DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
   <SupportUrl DefaultValue="https://assistify.de"/>
   <AppDomains>
     <AppDomain>outlook-plugin.berlin.dbcs.db.de</AppDomain>
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
+        <SourceLocation DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/taskpane/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -89,13 +89,13 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/assistify.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/assistify.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/assistify.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/assistify.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html" />
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html" />
+        <bt:Url id="Commands.Url" DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/commands/commands.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="https://outlook-plugin.berlin.dbcs.db.de/taskpane/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Assitify Add-in"/>
