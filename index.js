@@ -6,5 +6,4 @@ const PORT = process.env.PORT || 3000
 
 connect()
   .use(serveStatic(__dirname + '/dist'))
-  .use(serveStatic(__dirname + '/assets'))
   .listen(PORT, () => logger.info(`Server running on ${PORT}...`))

@@ -77,6 +77,18 @@ module.exports = async (env, options) => {
           from: "./src/helper/"
         }
       ]),
+      new CopyWebpackPlugin([
+        {
+          to: "assets",
+          from: "./assets"
+        }
+      ]),
+      new CopyWebpackPlugin([
+        {
+          to: "./",
+          from: "manifest.xml"
+        }
+      ]),
     ],
     devServer: {
       headers: {
