@@ -38,7 +38,8 @@ function dialogClosed(message) {
 
 
 function isValidConfig(config) {
-  return config && config.server && config.userId && config.authToken && config.channel ;
+  return false;
+  //return config && config.server && config.userId && config.authToken && config.channel ;
 }
 
 function getItemRestId() {
