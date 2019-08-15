@@ -90,8 +90,16 @@ function createDiscussion(config, mail, callback) {
   });
 }
 
+function convertHtmlToMarkdown(htmlText) {
+  var turndownService = new TurndownService()
+  var markdown = turndownService.turndown(htmlText)
+  console.log(markdown)
+  return markdown
+}
 
 function postEMail(config, mail, callback) {
+
+  markdownText = convertHtmlToMarkdown(mail.Body.Content)
 
   createDiscussion(config, mail, function (response, error) {
     if (error) {
@@ -108,7 +116,7 @@ function postEMail(config, mail, callback) {
         },
         data: {
           'roomId': response.discussion.rid,
-          'text': mail.Body.Content
+          'text': markdownText
         }
       }).done(function (response) {
         callback(response);
