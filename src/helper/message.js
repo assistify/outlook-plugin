@@ -62,6 +62,9 @@ function getParentRoomMembers(config, callback) {
         'X-Auth-Token': config.authToken,
         'X-User-Id': config.userId,
       },
+      data: {
+        roomName: config.channel || 'general',
+      },
   }).done(function (response) {
     callback(response);
   }).fail(function (error) {
