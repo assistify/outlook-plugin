@@ -1,32 +1,41 @@
-# Office-Addin-TaskPane-JS
+# Assistify Outlook Plugin
 
-This repository contains the source code used by the [Yo Office generator](https://github.com/OfficeDev/generator-office) when you create a new Office Add-in that appears in the task pane. You can also use this repository as a sample to base your own project from if you choose not to use the generator. 
+Adds a button to Outlook to send the current e-mail to an Assistify or Rocket.Chat channel.
 
-## JavaScript
+The first time you use this plugin, you will be asked to provide the URL of the chat you want to use.
+After that, you are expected to log in there. This is required to connect your personal chat account to
+your Outlook instance. This connection persists, so this is not necessary the next time you use the plugin.
 
-This template is written using JavaScript. For the [TypeScript](http://www.typescriptlang.org/) version of this template, go to [Office-Addin-TaskPane](https://github.com/OfficeDev/Office-Addin-TaskPane).
+When you send a message to the chat, you are asked to select a chat channel / room. In this room, the plugin
+creates a new discussion, so that you and your team can discuss the e-mail in this new discussion.
 
+## Developing the pluing
+
+If you want to change something on your local version of the plugin, you can setup a local server, which
+serves the modified pages of the plugin to outlook.
+
+1. Create a server certificate by executing the following command:
+
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
+
+2. Install a tool to serve local files via https:
+
+    npm install -g local-web-server
+    
+3. Modify your local copy of the `manifest.xml` file by replacing the string `https://assistify.github.io/outlook-plugin`
+with `https://localhost:8000`.
+
+   **Dont commit these changes!**
+
+4. Import the modified `manifest.xml` file to Outlook
+
+5. Start the local server
+
+    ws --https --cert server.crt --key server.key
+    
 ## Debugging
 
-This template supports debugging using any of the following techniques:
+The plugin can be debugged in the developer tools of Chrome. If you have a local server running, you could even
+add a line with the `debugger` command in the JavaScript code to stop at this location, because it is sometimes
+difficult to identify the file between the several hundred (!) files that Outlook loads.
 
-- [Use a browser's developer tools](https://docs.microsoft.com/office/dev/add-ins/testing/debug-add-ins-in-office-online)
-- [Attach a debugger from the task pane](https://docs.microsoft.com/office/dev/add-ins/testing/attach-debugger-from-task-pane)
-- [Use F12 developer tools on Windows 10](https://docs.microsoft.com/office/dev/add-ins/testing/debug-add-ins-using-f12-developer-tools-on-windows-10)
-
-## Questions and comments
-
-We'd love to get your feedback about this sample. You can send your feedback to us in the *Issues* section of this repository.
-
-Questions about Microsoft Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/office-js+API).  If your question is about the Office JavaScript APIs, make sure it's tagged with  [office-js].
-
-## Additional resources
-
-* [Office add-in documentation](https://docs.microsoft.com/office/dev/add-ins/overview/office-add-ins)
-* More Office Add-in samples at [OfficeDev on Github](https://github.com/officedev)
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Copyright
-
-Copyright (c) 2019 Microsoft Corporation. All rights reserved.
