@@ -10,10 +10,6 @@
 
         // for testing:
         var config = {};
-        config.channel = 'general';
-        config.server = 'https://team.assistify-test.noncd.db.de';
-        config.authToken = 'AxUcKRylRZqw0iHWP3iESwyjR2tvoQW9oFgKxLxOrU5';
-        config.userId = 'yieXqdDySKJpqKHyE';
 
         if (config && config.channel) {
             getJoinedChannels(config, function (response, error) {
