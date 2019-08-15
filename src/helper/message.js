@@ -91,10 +91,13 @@ function createDiscussion(config, mail, callback) {
 }
 
 function convertHtmlToMarkdown(htmlText) {
-  var turndownService = new TurndownService()
-  var markdown = turndownService.turndown(htmlText)
+  const options = {
+    bulletListMarker: "-"
+  }
+  const turndownService = new TurndownService(options)
+  const markdown = turndownService.turndown(htmlText)
   console.log(markdown)
-  return markdown
+  return markdown.replace(/<\!--.*?-->/g, "");
 }
 
 function postEMail(config, mail, callback) {
