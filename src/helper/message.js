@@ -85,7 +85,7 @@ function createNewDiscussion(config, discussion, callback) {
     data: {
       prid: discussion.parentId,
       t_name: discussion.name,
-      users: discussion.users
+      users: discussion.members
     },
   }).done(function (response) {
     callback(response);
@@ -123,7 +123,6 @@ function convertHtmlToMarkdown(htmlText) {
   }
   const turndownService = new TurndownService(options)
   const markdown = turndownService.turndown(htmlText)
-  console.log(markdown)
   return markdown.replace(/<\!--.*?-->/g, "");
 }
 
