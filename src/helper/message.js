@@ -122,12 +122,11 @@ function convertHtmlToMarkdown(htmlText) {
     bulletListMarker: "-"
   }
   const turndownService = new TurndownService(options)
-  const markdown = turndownService.turndown(htmlText)
+  const markdown = turndownService.turndown(htmlText.replace(/&nbsp;/g, " "))
   return markdown.replace(/<\!--.*?-->/g, "");
 }
 
 function postEMail(config, mail, callback) {
-
   markdownText = convertHtmlToMarkdown(mail.Body.Content)
 
   createDiscussion(config, mail, function (response, error) {
