@@ -37,6 +37,32 @@ function getRoom(config, callback) {
       roomName: config.channel || 'general',
     },
   }).done(function (response) {
+    getParentRoomMembers(config, function (mresponse, error) {
+      if (error) {
+        callback(null, error);
+      } else {
+        response.members = mresponse.members.map(member => {
+            return member.username;
+        });
+        callback(response);
+      }
+    });
+  }).fail(function (error) {
+    callback(null, error);
+  });
+}
+
+function getParentRoomMembers(config, callback) {
+  var url = config.server + '/api/v1/channels.members';
+  $.ajax({
+      url: url,
+      dataType: 'json',
+      method: 'GET',
+      headers: {
+        'X-Auth-Token': config.authToken,
+        'X-User-Id': config.userId,
+      },
+  }).done(function (response) {
     callback(response);
   }).fail(function (error) {
     callback(null, error);
@@ -65,8 +91,6 @@ function createNewDiscussion(config, discussion, callback) {
   });
 }
 
-
-
 function createDiscussion(config, mail, callback) {
   // Get the room in which the mail will posted.
   getRoom(config, function (response, error) {
@@ -76,7 +100,7 @@ function createDiscussion(config, mail, callback) {
       var discussion = {
         parentId: response.channel._id,
         name: mail.Subject,
-        members: []
+        members: response.members || []
       };
       //Create a new channel
       createNewDiscussion(config, discussion, function (response, error) {
