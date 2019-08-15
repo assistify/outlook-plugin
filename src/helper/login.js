@@ -17,7 +17,7 @@ function login(config, callback) {
 }
 
 function logout(config, callback) {
-  
+
   var url = config.server + '/api/v1/logout';
 
   $.ajax({
@@ -55,21 +55,12 @@ function getJoinedChannels(config, callback) {
 
 function buildChannelsList(parent, channels, callback) {
   channels.forEach(function (channel) {
-
-    var list = $('<li>')
+    var item = $('<option>')
+      .val(channel.name)
+      .text(channel.name)
       .appendTo(parent);
 
-    var item = $('<div>')
-      .attr('id', channel._id)
-      .addClass('listitem')
-      .val(channel.name)
-      .appendTo(list);
-
-    var text = $('<label>')
-      .text(channel.name)
-      .appendTo(item);
-
-    item.on('click', { channel: $('#' + channel._id).val() }, callback);
+    item.on('click', channel, callback);
   });
 
 }
