@@ -119,15 +119,29 @@ function postEMail(config, mail, callback) {
           'text': markdownText
         }
       }).done(function (response) {
-        callback(response);
+        return sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid).done(function () {
+          callback(response);
+        })
       }).fail(function (error) {
         callback(null, error);
       });
     }
   });
 
-
-
+  function sendToLog(env, userId, parent) {
+    return $.ajax({
+      url: 'https://loggia-assistify.berlin.dbcs.db.de',
+      dataType: 'json',
+      method: 'POST',
+      data: {
+        s: 'outlook-plugin',
+        t: +new Date(),
+        e: env,
+        u: userId,
+        p: parent
+      }
+    })
+  }
 }
 
 /* function getRoom(baseUrl, name, { userId, authToken }) {
