@@ -63,12 +63,14 @@ function forward(event) {
   //Get the configuration for the Add-in.
   var config = getConfiguration();
 
-  // Configuration must contain the Server Url, UserId & authToken.(if already logged in via api)
+  showConfigDialog(event);
+
+/*   // Configuration must contain the Server Url, UserId & authToken.(if already logged in via api)
   if (!isValidConfig(config)) {
-    showConfigDialog(event);
+    
   } else {
     send(event);
-  }
+  } */
 }
 
 function send(event) {
