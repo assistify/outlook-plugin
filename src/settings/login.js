@@ -65,8 +65,9 @@
         function onRoomSelected(e) {
             var channel = e.data;
             config.channel = channel.name;
-            $('#' + channel._id)
-                .addClass('selected');
+
+            // Send configuration to the host.
+            sendMessageToHost(config);
         }
 
 
