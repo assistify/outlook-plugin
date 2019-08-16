@@ -12,7 +12,7 @@
                         if (error) {
                             showError(error);
                         } else {
-                            buildChannelsList($('#room-picker'), response.channels, onRoomSelected);
+                            buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
                             showView('#rooms');
                         }
                     });
@@ -51,7 +51,7 @@
                                 if (error) {
                                     showError(error);
                                 } else {
-                                    buildChannelsList($('#room-picker'), response.channels, onRoomSelected);
+                                    buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
                                     showView('#rooms');
                                 }
                             });
@@ -60,9 +60,8 @@
                 });
             });
 
-            function onRoomSelected(e) {
-                var channel = e.data;
-                config.channel = channel.name;
+            function onRoomSelected() {
+                config.channel = $("#room-picker option:selected").text();
 
                 // Send configuration to the host.
                 sendMessageToHost(JSON.stringify(config));
