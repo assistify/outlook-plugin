@@ -118,14 +118,14 @@ function createDiscussion(config, mail, callback) {
 function convertHtmlToMarkdown(htmlText) {
   var options = {
     bulletListMarker: "-"
-  }
-  var turndownService = new TurndownService(options)
-  var markdown = turndownService.turndown(htmlText.replace(/&nbsp;/g, " "))
+  };
+  var turndownService = new TurndownService(options);
+  var markdown = turndownService.turndown(htmlText.replace(/&nbsp;/g, " "));
   return markdown.replace(/<\!--.*?-->/g, "");
 }
 
 function postEMail(config, mail, callback) {
-  markdownText = convertHtmlToMarkdown(mail.Body.Content)
+  markdownText = convertHtmlToMarkdown(mail.Body.Content);
 
   createDiscussion(config, mail, function (response, error) {
     if (error) {
