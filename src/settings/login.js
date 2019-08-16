@@ -6,7 +6,21 @@
     };
 
     $(document).ready(function (e) {
+        //var config = getConfiguration();
+
+        // for testing:
         var config = {};
+
+        if (config && config.channel) {
+            getJoinedChannels(config, function (response, error) {
+                if (error) {
+                    showError(error);
+                } else {
+                    buildChannelsList($('#room-picker'), response.channels, onRoomSelected);
+                    showView('#rooms');
+                }
+            });
+        }
 
         $('#server').on('change', function () {
             // TO-DO
@@ -49,7 +63,10 @@
         });
 
         function onRoomSelected(e) {
-            config.channel = e.data.channel;
+            var channel = e.data;
+            config.channel = channel.name;
+            $('#' + channel._id)
+                .addClass('selected');
         }
 
 
@@ -57,7 +74,7 @@
             sendMessageToHost(JSON.stringify(config));
         });
 
-        $('#cancel').on('click', function () {
+        $('#logoff').on('click', function () {
             //Logout here..
             var url = '#url';
             showView(url);
@@ -65,9 +82,10 @@
             if (config.authToken && config.userId) {
                 logout(config, function (response, error) {
                     if (error) {
-                       // Error handling
+                        // Error handling
                     } else {
-                        console.log('Logout Success');
+                        // clears all the configuration
+                        resetConfiguration();
                     }
                 });
             }
