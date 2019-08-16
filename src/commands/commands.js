@@ -17,7 +17,7 @@ function showConfigDialog(event) {
   var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
   var dialogOptions = { width: 40, height: 60, displayInIframe: true };
   if (config) {
-    url = url + '?param=' + JSON.stringify(config);
+    url = url + '?param=' + encodeURIComponent(JSON.stringify(config));
   }
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
@@ -31,7 +31,7 @@ function processMessage(message) {
   setConfiguration(config, function (result) {
     loginDialog.close();
     loginDialog = null;
-    // Implicitly invoke the send message function
+    // Send message implicitly
     send(configEvent);
   });
 
