@@ -86,8 +86,7 @@ function send(event) {
           if (error) {
             showError(error);
           } else {
-            var mail = response;
-            postEMail(config, mail, function (response, error) {
+            postEMail(getConfiguration(), response, function (response, error) {
               if (error) {
                 // show error
               } else {
