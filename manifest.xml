@@ -9,7 +9,7 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Assistify"/>
-  <Description DefaultValue="Chat with Assistify"/>
+  <Description DefaultValue="Diskutiere in Assistify"/>
   <IconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
   <HighResolutionIconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
   <SupportUrl DefaultValue="https://assistify.de"/>
@@ -83,10 +83,10 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Assitify Add-in"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Discuss in Assistify"/>
+        <bt:String id="ActionButton.Label" DefaultValue="Diskutiere in Assistify"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <bt:String id="ActionButton.Tooltip" DefaultValue="Führt eine Aktion aus bei Klick"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
