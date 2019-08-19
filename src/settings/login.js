@@ -3,7 +3,6 @@
     var config;
     // The initialize function must be run each time a new page is loaded.
     Office.onReady(function (reason) {
-
         $(document).ready(function (e) {
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
@@ -105,7 +104,10 @@
             }
 
             function showError(error) {
-                // Handle unexpected error here...
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                x.textContent = error.statusText;
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
             }
 
             function getParameterByName(name, url) {
