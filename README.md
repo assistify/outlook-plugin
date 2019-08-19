@@ -43,12 +43,15 @@ difficult to identify the file between the several hundred (!) files that Outloo
 
 ## Install Outlook plugin
 To install the Outlook Plugin go to the browser version of outlook and deactivate the new outlook theme:
+
 ![Old Outlook Theme](/documentation/oldOutlook.png)
 
 Next click on `Manage add-ins`:
+
 ![Manage Outlook](/documentation/manageAddons.png)
 
 Find `upload from url` from the `My add-ins` section and insert the manifest.xml url `https://assistify.github.io/outlook-plugin/manifest.xml`:
+
 ![Upload From Url](/documentation/uploadFromUrl.png)
 
 After you installed the Plugin a new icon should appear in your Email window
@@ -56,11 +59,9 @@ After you installed the Plugin a new icon should appear in your Email window
 ## How to use the Plugin
 
 Click on `Discuss in Assistify` and enter the Server-URL:
+
 ![Enter Server Url](/documentation/serverUrl.png)
 
 Click on `Next` and enter a valid `username` and `password` for Assistify.
 
 Click on `Connect` and choose a `Topic` to post your email.
-
-
-
