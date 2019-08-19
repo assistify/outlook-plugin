@@ -146,7 +146,7 @@ select:focus::-ms-value {
 visibility: hidden;
 min-width: 250px;
 margin-left: -125px;
-background-color: #FF2D00;
+background-color: #d4145a;
 color: #fff;
 text-align: center;
 border-radius: 2px;

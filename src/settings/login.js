@@ -3,6 +3,7 @@
     var config;
     // The initialize function must be run each time a new page is loaded.
     Office.onReady(function (reason) {
+
         $(document).ready(function (e) {
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
@@ -18,9 +19,18 @@
                 }
             }
 
+            const connectBtn = document.getElementById('navToLogin');
+            connectBtn.style.visibility = "hidden";
 
-            $('#server').on('change', function () {
-                // TO-DO
+            $('#server').keyup(function () {
+                const urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$';
+                if ($('#server').val().match(urlCheck)) {                    
+                    connectBtn.style.visibility = "visible";
+                }
+                else {
+                    connectBtn.style.visibility = "hidden";
+                }
+                
             });
             $('#username').on('change', function () {
                 // TO-DO
@@ -29,12 +39,12 @@
                 // TO-DO
             });
 
+            var server = $('#server').val();
+            var user = $('#username').val();
+            var password = $('#password').val();
+
             // Handle the connect action on the dialog window.
             $('#connect').on('click', function () {
-
-                var server = $('#server').val();
-                var user = $('#username').val();
-                var password = $('#password').val();
 
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
@@ -85,7 +95,16 @@
 
             $('#navToLogin').on('click', function () {
                 var login = '#login';
-                showView(login);
+                if (validateUrl($('#server').val()).status != 200) {
+                    const error = {};
+                    error.statusText = 'Ungültige Server URL';
+                    showError(error)
+                    return;
+                }
+                else {
+                    showView(login);
+                }
+                
             });
 
             $('#backToUrl').on('click', function () {
@@ -108,6 +127,14 @@
                 x.className = "show";
                 x.textContent = error.statusText;
                 setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            }
+
+            function validateUrl(server) {
+                const res =  $.ajax({
+                    url: server+'/api/v1/info',
+                    async: false                 
+                  })
+                return res;
             }
 
             function getParameterByName(name, url) {
