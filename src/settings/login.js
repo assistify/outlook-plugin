@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    var config;
     // The initialize function must be run each time a new page is loaded.
     Office.onReady(function (reason) {
 
         $(document).ready(function (e) {
+            var config = {};
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
                 if (config && config.server && config.authToken && config.userId && config.channel) {
@@ -12,7 +12,7 @@
                         if (error) {
                             showError(error);
                         } else {
-                            buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
+                            buildChannelsList($('#room-picker'), config.channel, response.channels);
                             showView('#rooms');
                         }
                     });
@@ -32,11 +32,9 @@
 
             // Handle the connect action on the dialog window.
             $('#connect').on('click', function () {
-
                 var server = $('#server').val();
                 var user = $('#username').val();
                 var password = $('#password').val();
-
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
                         showError(error);
@@ -51,7 +49,7 @@
                                 if (error) {
                                     showError(error);
                                 } else {
-                                    buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
+                                    buildChannelsList($('#room-picker'), config.channel, response.channels);
                                     showView('#rooms');
                                 }
                             });
@@ -59,13 +57,6 @@
                     }
                 });
             });
-
-            function onRoomSelected() {
-                config.channel = $("#room-picker option:selected").text();
-
-                // Send configuration to the host.
-                sendMessageToHost(JSON.stringify(config));
-            }
 
             $('#logoff').on('click', function () {
                 //Logout here..
@@ -85,6 +76,7 @@
             });
 
             $('#navToLogin').on('click', function () {
+                // validate existance of URL
                 var login = '#login';
                 showView(login);
             });
@@ -119,6 +111,18 @@
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
+
+
+            $('#room-picker').on('click', 'li', function () {
+                $(this)
+                    .addClass('ui-selected')
+                    .siblings()
+                    .removeClass('ui-selected');
+
+                config.channel = $(this).text();
+                sendMessageToHost(JSON.stringify(config));
+            });
+
 
         });
     });
