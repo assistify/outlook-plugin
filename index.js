@@ -18,7 +18,7 @@ if (process.env.DEBUG) {
   })
 }
 
-app.get('/', (req, res) => res.send(manifestxml))
+app.get('/', (req, res) => res.set('Content-Type', 'text/xml').send(manifestxml))
 app.get('/src/helper/message.js', (req, res) => res.send(messagejs))
 app.get('/src', express.static(__dirname + '/src'))
 app.get('/assets', express.static(__dirname + '/assets'))
