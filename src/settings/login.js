@@ -20,15 +20,15 @@
             }
 
             var connectBtn = document.getElementById('navToLogin');
-            connectBtn.style.visibility = "hidden";
+            connectBtn.disabled = true;
 
             $('#server').keyup(function () {
                 var urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$';
                 if ($('#server').val().match(urlCheck)) {                    
-                    connectBtn.style.visibility = "visible";
+                    connectBtn.disabled = false;
                 }
                 else {
-                    connectBtn.style.visibility = "hidden";
+                    connectBtn.disabled = true;
                 }
                 
             });
