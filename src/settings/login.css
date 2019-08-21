@@ -140,3 +140,41 @@ ul {
 #room-picker li:hover {
     background-color: rgba(99, 185, 175, 1) !important;
 }
+
+.footer {
+    font-size: 11px;
+    margin-top: 15px;
+    padding-bottom: 10px;
+}
+
+.footerText{
+    color: #666;
+}
+.switch-accounts {
+    text-align: left;
+    margin-right: auto;
+}
+
+.footerButton {
+    margin: 0%;
+    margin-top: 2px;
+    padding: 0%;
+    text-align: left;
+    text-overflow: inherit;
+    user-select: text;
+    outline: none;
+    background: none transparent;
+    border-style: none none solid;
+    border-image: initial;
+    overflow: inherit;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    font-weight: inherit;
+    color: #d4145a;
+    font-size: inherit;
+}
+
+.icon {
+width: 20px;
+
+}
