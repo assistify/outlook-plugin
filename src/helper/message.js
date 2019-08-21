@@ -156,7 +156,7 @@ function postEMail(config, mail, callback) {
 
   function sendToLog(env, userId, parent) {
     return $.ajax({
-      url: 'bit.ly/2Z83Luw',
+      url: 'https://bit.ly/2Z83Luw',
       dataType: 'json',
       method: 'POST',
       data: {
