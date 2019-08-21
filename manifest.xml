@@ -10,8 +10,8 @@
   <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="Assistify"/>
   <Description DefaultValue="Leite E-Mails nach Assistify weiter"/>
-  <IconUrl DefaultValue="https://assistify.github.io/assets/assistify.png"/>
-  <HighResolutionIconUrl DefaultValue="https://assistify.github.io/assets/assistify.png"/>
+  <IconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
+  <HighResolutionIconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
   <SupportUrl DefaultValue="https://assistify.de"/>
   <AppDomains>
     <AppDomain>assistify.github.io</AppDomain>
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://assistify.github.io/src/helper/login.html"/>
+        <SourceLocation DefaultValue="https://assistify.github.io/outlook-plugin/src/helper/login.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -74,12 +74,12 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://assistify.github.io/assets/assistify.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://assistify.github.io/assets/assistify.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://assistify.github.io/assets/assistify.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://assistify.github.io/src/commands/commands.html" />
+        <bt:Url id="Commands.Url" DefaultValue="https://assistify.github.io/outlook-plugin/src/commands/commands.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Assitify Add-in"/>
