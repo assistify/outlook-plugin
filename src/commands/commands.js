@@ -28,13 +28,23 @@ function showConfigDialog(event) {
 
 function processMessage(message) {
   config = JSON.parse(message.message);
-  setConfiguration(config, function (result) {
-    loginDialog.close();
-    loginDialog = null;
-    // Send message implicitly
-    send(configEvent);
-  });
-
+  switch (config.action) {
+    case 'logoff':
+      // resets the user's preference
+      resetConfiguration(config);
+      break;
+    case 'send':
+      // Stores the user's preference
+      setConfiguration(config, function (result) {
+        loginDialog.close();
+        loginDialog = null;
+        // Send message implicitly
+        send(configEvent);
+      });
+      break;
+    default:
+      break;
+  }
 }
 
 function dialogClosed(message) {
