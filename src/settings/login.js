@@ -20,14 +20,18 @@
             }
 
 
-            $('#server').on('change', function () {
+            $('#server').on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    $('#navToLogin').click();
+                }
+            });
+            $('#username').on('keyup', function (e) {
                 // TO-DO
             });
-            $('#username').on('change', function () {
-                // TO-DO
-            });
-            $('#password').on('change', function () {
-                // TO-DO
+            $('#password').on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    $('#connect').click();
+                }
             });
 
             // Handle the connect action on the dialog window.
@@ -49,6 +53,9 @@
                                 if (error) {
                                     showError(error);
                                 } else {
+                                    // show the user logged in.
+                                    var text = 'Eingeloggt im Team '+ config.server;
+                                    $("#email").text(text);
                                     buildChannelsList($('#room-picker'), config.channel, response.channels);
                                     showView('#rooms');
                                 }
@@ -58,18 +65,24 @@
                 });
             });
 
+            $('#send').on('click', function () {
+                config.action = 'send';
+                sendMessageToHost(JSON.stringify(config));
+            });
+
             $('#logoff').on('click', function () {
                 //Logout here..
                 var url = '#url';
                 showView(url);
-
+                
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
                             // Error handling
                         } else {
                             // clears all the configuration
-                            resetConfiguration();
+                            config.action = 'loggoff';
+                            sendMessageToHost(JSON.stringify(config));
                         }
                     });
                 }
@@ -84,6 +97,15 @@
             $('#backToUrl').on('click', function () {
                 var url = '#url';
                 showView(url);
+            });
+
+            $('#room-picker').on('click', 'li', function () {
+                $(this)
+                    .addClass('ui-selected')
+                    .siblings()
+                    .removeClass('ui-selected');
+                // set the channel as selected.
+                config.channel = $(this).text();
             });
 
             function showView(viewName) {
@@ -113,15 +135,7 @@
             }
 
 
-            $('#room-picker').on('click', 'li', function () {
-                $(this)
-                    .addClass('ui-selected')
-                    .siblings()
-                    .removeClass('ui-selected');
 
-                config.channel = $(this).text();
-                sendMessageToHost(JSON.stringify(config));
-            });
 
 
         });
