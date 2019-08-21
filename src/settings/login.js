@@ -19,11 +19,11 @@
                 }
             }
 
-            const connectBtn = document.getElementById('navToLogin');
+            var connectBtn = document.getElementById('navToLogin');
             connectBtn.style.visibility = "hidden";
 
             $('#server').keyup(function () {
-                const urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$';
+                var urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$';
                 if ($('#server').val().match(urlCheck)) {                    
                     connectBtn.style.visibility = "visible";
                 }
@@ -96,7 +96,7 @@
             $('#navToLogin').on('click', function () {
                 var login = '#login';
                 if (validateUrl($('#server').val()).status != 200) {
-                    const error = {};
+                    var error = {};
                     error.statusText = 'Ungültige Server URL';
                     showError(error)
                     return;
@@ -130,7 +130,7 @@
             }
 
             function validateUrl(server) {
-                const res =  $.ajax({
+                var res =  $.ajax({
                     url: server+'/api/v1/info',
                     async: false                 
                   })
