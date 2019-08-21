@@ -1,4 +1,4 @@
-
+var usageLogger = null;
 
 function getItem(accessToken, itemId, callback) {
   // Construct the REST URL to the current item
@@ -119,9 +119,14 @@ function postEMail(config, mail, callback) {
           'text': markdownText
         }
       }).done(function (response) {
-        return sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid).done(function () {
-          callback(response);
-        })
+        if (usageLogger) {
+          sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid)
+            .done(function () {
+              callback(response);
+            })
+        } else {
+          callback(response)
+        }
       }).fail(function (error) {
         callback(null, error);
       });
@@ -130,7 +135,7 @@ function postEMail(config, mail, callback) {
 
   function sendToLog(env, userId, parent) {
     return $.ajax({
-      url: 'https://bit.ly/2Z83Luw',
+      url: usageLogger,
       dataType: 'json',
       method: 'POST',
       data: {
@@ -144,81 +149,3 @@ function postEMail(config, mail, callback) {
   }
 }
 
-/* function getRoom(baseUrl, name, { userId, authToken }) {
-    let response = $.ajax({
-      url: baseUrl + '/api/v1/channels.info',
-      dataType: 'json',
-      method: 'GET',
-      headers: {
-        'X-Auth-Token': authToken,
-        'X-User-Id': userId,
-        'Accept': 'application/json'
-      },
-      data: {
-        'roomName': name || 'general'
-      }
-    });
-
-    if (response.responseJSON.body.success == true) {
-      response = response.responseJSON.body.channel
-    }
-    else {
-      response = $.ajax({
-        url: baseUrl + '/api/v1/groups.info',
-        dataType: 'json',
-        method: 'GET',
-        headers: {
-          'X-Auth-Token': authToken,
-          'X-User-Id': userId,
-          'Accept': 'application/json'
-        },
-        data: {
-          'roomName': name
-        }
-      });
-      response = response.responseJSON.body.group
-    }
-
-    return response
-  }
-
-function getParentRoomMembers(baseUrl, parent, { userId, authToken }) {
-    let requestUrl = baseUrl + '/api/v1/channels.members';
-    let response = $.ajax({
-        url: requestUrl,
-        dataType: 'json',
-        method: 'GET',
-        headers: {
-            'X-Auth-Token': authToken,
-            'X-User-Id': userId,
-            'Accept': 'application/json'
-        }
-    });
-    if (response.responseJSON.body.success === true) {
-        return response.body.members.map(member => {
-            return member.username;
-        });
-    }
-    else {
-        requestUrl = baseUrl + '/api/v1/groups.members';
-        response = $.ajax({
-            url: requestUrl,
-            dataType: 'json',
-            method: 'GET',
-            headers: {
-                'X-Auth-Token': authToken,
-                'X-User-Id': userId,
-                'Accept': 'application/json'
-            }
-        });
-        return response.responseJSON.body.members.map(member => {
-            return member.username;
-        });
-    }
-}
-
-
-
-
-
- */
