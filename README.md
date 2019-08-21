@@ -54,7 +54,7 @@ Find `upload from url` from the `My add-ins` section and insert the manifest.xml
 
 ![Upload From Url](/documentation/uploadFromUrl.png)
 
-After you installed the Plugin a new icon should appear in your Email window
+After you installed the Plugin a new icon should appear in your Outlook for Windows / Mac / Desktop
 
 ## How to use the Plugin
 
@@ -63,5 +63,6 @@ Click on `Discuss in Assistify` and enter the Server-URL:
 ![Enter Server Url](/documentation/serverUrl.png)
 
 Click on `Next` and enter a valid `username` and `password` for Assistify.
+Currently only local login-data is supported. Login via SSO is not possible at the moment.
 
 Click on `Connect` and choose a `Topic` to post your email.
