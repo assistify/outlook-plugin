@@ -84,9 +84,6 @@ body {
     color: black;
 }
 
-
-
-
 ul {
     padding: 0px;
     list-style: none;
@@ -98,46 +95,48 @@ ul {
     font-style: inherit;
 }
 
-.selected {
-    border-color: brown;
-    border-width: 1px;
-}
-
-.room-picker {
-    width: 100%;
-    border: none;
-    outline: none;
-}
 
 .rooms-container {
     height: 30vh;
     margin-top: 10px;
-    border: 1px solid #d2d2d2;
+    margin-bottom: 10px;
+    border: 0.5px solid #d2d2d2;
     overflow-y: auto;
     font-size: 14px;
-    margin-bottom: 10px;
     border-radius: 2px;
-    display: flex;
 }
 
-option {
+#room-picker .ui-selecting {
+    background: rgba(99, 185, 175, 1);
+}
+
+#room-picker .ui-selected {
+    background: rgba(0, 169, 157, 1);
+    color: white;
+}
+
+#room-picker {
+    width: 100%;
+    border: none;
+    outline: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+#room-picker li {
+    padding-top: 10px;
+    list-style: none;
     display: list-item;
     border-width: 1px;
     border-color: #e1e5e8;
     background-color: transparent;
     border-style: solid;
-    padding-left:10px;
+    padding-left: 10px;
     font-size: 14px;
     height: 30px;
-    box-sizing: border-box;
-    color: #4d4d4d;
-    padding-top: 5px;
+    cursor: default;
 }
 
-option:hover {
-    background-color: #f3f3f3 !important;
+#room-picker li:hover {
+    background-color: rgba(99, 185, 175, 1) !important;
 }
-
-select:focus::-ms-value {
-    background-color: transparent;
-  }

@@ -53,19 +53,16 @@ function getJoinedChannels(config, callback) {
   });
 }
 
-function buildChannelsList(parent, prevChannel, channels, callback) {
+function buildChannelsList(parent, prevChannel, channels) {
   if (prevChannel) {
     $(parent).val(prevChannel);
   }
 
   channels.forEach(function (channel) {
-    var item = $('<option>')
+    $('<li>')
+      .attr('id', channel._id)
       .val(channel.name)
       .text(channel.name)
       .appendTo(parent);
   });
-
-  $(parent).change(callback);
-
-
 }
