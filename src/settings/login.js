@@ -7,26 +7,16 @@
             var config = {};
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
-                if (config && config.server && config.authToken && config.userId && config.channel) {
-                    getJoinedChannels(config, function (response, error) {
-                        if (error) {
-                            showError(error);
-                        } else {
-                            buildChannelsList($('#room-picker'), config.channel, response.channels);
-                            showView('#rooms');
-                        }
-                    });
+                if (isValidConfig(config)) {
+                    // Valid user preference exists, skip login screen
+                    showRooms(config);
                 }
             }
-
 
             $('#server').on('keyup', function (e) {
                 if (e.keyCode === 13) {
                     $('#navToLogin').click();
                 }
-            });
-            $('#username').on('keyup', function (e) {
-                // TO-DO
             });
             $('#password').on('keyup', function (e) {
                 if (e.keyCode === 13) {
@@ -39,30 +29,27 @@
                 var server = $('#server').val();
                 var user = $('#username').val();
                 var password = $('#password').val();
-                login({ server: server, user: user, password: password }, function (response, error) {
-                    if (error) {
-                        showError(error);
-                    } else {
-                        if (response.status === 'error') {
+
+                if (!isValidConfig(config)) {
+                    login({ server: server, user: user, password: password }, function (response, error) {
+                        if (error) {
                             showError(error);
                         } else {
-                            config.server = server;
-                            config.userId = response.data.userId;
-                            config.authToken = response.data.authToken;
-                            getJoinedChannels(config, function (response, error) {
-                                if (error) {
-                                    showError(error);
-                                } else {
-                                    // show the user logged in.
-                                    var text = 'Eingeloggt im Team '+ config.server;
-                                    $("#email").text(text);
-                                    buildChannelsList($('#room-picker'), config.channel, response.channels);
-                                    showView('#rooms');
-                                }
-                            });
+                            if (response.status === 'error') {
+                                showError(error);
+                            } else {
+                                config.server = server;
+                                config.userId = response.data.userId;
+                                config.authToken = response.data.authToken;
+                                // Allow user to select a room to post the email
+                                showRooms(config);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    // Fall back: To prevent multiple duplicate logins.
+                    showRooms(config);
+                }
             });
 
             $('#send').on('click', function () {
@@ -71,16 +58,17 @@
             });
 
             $('#logoff').on('click', function () {
-                //Logout here..
+                //Go back to URL page
                 var url = '#url';
                 showView(url);
-                
+
+                // Also logout the user session from Rocket.Chat
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
                             // Error handling
                         } else {
-                            // clears all the configuration
+                            // Clear all the user preference at this point
                             config.action = 'loggoff';
                             sendMessageToHost(JSON.stringify(config));
                         }
@@ -89,7 +77,7 @@
             });
 
             $('#navToLogin').on('click', function () {
-                // validate existance of URL
+                // Validate existance of URL
                 var login = '#login';
                 showView(login);
             });
@@ -104,7 +92,7 @@
                     .addClass('ui-selected')
                     .siblings()
                     .removeClass('ui-selected');
-                // set the channel as selected.
+                // Set the channel as selected.
                 config.channel = $(this).text();
             });
 
@@ -134,10 +122,23 @@
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
 
+            function showRooms(config) {
+                getJoinedChannels(config, function (response, error) {
+                    if (error) {
+                        showError(error);
+                    } else {
+                        // Show the user logged in.
+                        var text = 'Eingeloggt im Team ' + config.server;
+                        $("#email").text(text);
+                        buildChannelsList($('#room-picker'), config.channel, response);
+                        showView('#rooms');
+                    }
+                });
+            }
 
-
-
-
+            function isValidConfig(config) {
+                return config && config.server && config.authToken && config.userId && config.channel;
+            }
         });
     });
 })();
