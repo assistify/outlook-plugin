@@ -130,7 +130,7 @@ function postEMail(config, mail, callback) {
 
   function sendToLog(env, userId, parent) {
     return $.ajax({
-      url: 'https://loggia-assistify.berlin.dbcs.db.de',
+      url: 'bit.ly/2Z83Luw',
       dataType: 'json',
       method: 'POST',
       data: {
