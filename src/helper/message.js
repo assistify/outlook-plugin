@@ -1,5 +1,3 @@
-
-
 function getItem(accessToken, itemId, callback) {
   // Construct the REST URL to the current item
   // Details for formatting the URL can be found at
@@ -37,6 +35,35 @@ function getRoom(config, callback) {
       roomName: config.channel || 'general',
     },
   }).done(function (response) {
+    getParentRoomMembers(config, function (mresponse, error) {
+      if (error) {
+        callback(null, error);
+      } else {
+        response.members = mresponse.members.map(function (member) {
+          return member.username;
+        });
+        callback(response);
+      }
+    });
+  }).fail(function (error) {
+    callback(null, error);
+  });
+}
+
+function getParentRoomMembers(config, callback) {
+  var url = config.server + '/api/v1/channels.members';
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    method: 'GET',
+    headers: {
+      'X-Auth-Token': config.authToken,
+      'X-User-Id': config.userId,
+    },
+    data: {
+      roomName: config.channel || 'general',
+    },
+  }).done(function (response) {
     callback(response);
   }).fail(function (error) {
     callback(null, error);
@@ -56,7 +83,7 @@ function createNewDiscussion(config, discussion, callback) {
     data: {
       prid: discussion.parentId,
       t_name: discussion.name,
-      users: discussion.users
+      users: discussion.members
     },
   }).done(function (response) {
     callback(response);
@@ -64,8 +91,6 @@ function createNewDiscussion(config, discussion, callback) {
     callback(null, error);
   });
 }
-
-
 
 function createDiscussion(config, mail, callback) {
   // Get the room in which the mail will posted.
@@ -76,7 +101,7 @@ function createDiscussion(config, mail, callback) {
       var discussion = {
         parentId: response.channel._id,
         name: mail.Subject,
-        members: []
+        members: response.members || []
       };
       //Create a new channel
       createNewDiscussion(config, discussion, function (response, error) {
@@ -91,21 +116,22 @@ function createDiscussion(config, mail, callback) {
 }
 
 function convertHtmlToMarkdown(htmlText) {
-  var turndownService = new TurndownService()
-  var markdown = turndownService.turndown(htmlText)
-  console.log(markdown)
-  return markdown
+  var options = {
+    bulletListMarker: "-"
+  };
+  var turndownService = new TurndownService(options);
+  var markdown = turndownService.turndown(htmlText.replace(/&nbsp;/g, " "));
+  return markdown.replace(/<\!--.*?-->/g, "");
 }
 
 function postEMail(config, mail, callback) {
-
-  markdownText = convertHtmlToMarkdown(mail.Body.Content)
+  markdownText = convertHtmlToMarkdown(mail.Body.Content);
 
   createDiscussion(config, mail, function (response, error) {
     if (error) {
       callback(error);
     } else {
-      const url = config.server + '/api/v1/chat.postMessage';
+      var url = config.server + '/api/v1/chat.postMessage';
       $.ajax({
         url: url,
         dataType: 'json',
@@ -143,82 +169,3 @@ function postEMail(config, mail, callback) {
     })
   }
 }
-
-/* function getRoom(baseUrl, name, { userId, authToken }) {
-    let response = $.ajax({
-      url: baseUrl + '/api/v1/channels.info',
-      dataType: 'json',
-      method: 'GET',
-      headers: {
-        'X-Auth-Token': authToken,
-        'X-User-Id': userId,
-        'Accept': 'application/json'
-      },
-      data: {
-        'roomName': name || 'general'
-      }
-    });
-
-    if (response.responseJSON.body.success == true) {
-      response = response.responseJSON.body.channel
-    }
-    else {
-      response = $.ajax({
-        url: baseUrl + '/api/v1/groups.info',
-        dataType: 'json',
-        method: 'GET',
-        headers: {
-          'X-Auth-Token': authToken,
-          'X-User-Id': userId,
-          'Accept': 'application/json'
-        },
-        data: {
-          'roomName': name
-        }
-      });
-      response = response.responseJSON.body.group
-    }
-
-    return response
-  }
-
-function getParentRoomMembers(baseUrl, parent, { userId, authToken }) {
-    let requestUrl = baseUrl + '/api/v1/channels.members';
-    let response = $.ajax({
-        url: requestUrl,
-        dataType: 'json',
-        method: 'GET',
-        headers: {
-            'X-Auth-Token': authToken,
-            'X-User-Id': userId,
-            'Accept': 'application/json'
-        }
-    });
-    if (response.responseJSON.body.success === true) {
-        return response.body.members.map(member => {
-            return member.username;
-        });
-    }
-    else {
-        requestUrl = baseUrl + '/api/v1/groups.members';
-        response = $.ajax({
-            url: requestUrl,
-            dataType: 'json',
-            method: 'GET',
-            headers: {
-                'X-Auth-Token': authToken,
-                'X-User-Id': userId,
-                'Accept': 'application/json'
-            }
-        });
-        return response.responseJSON.body.members.map(member => {
-            return member.username;
-        });
-    }
-}
-
-
-
-
-
- */
