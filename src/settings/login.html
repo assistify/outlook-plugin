@@ -11,13 +11,12 @@
     <!-- For more information on Office UI Fabric, visit https://developer.microsoft.com/fabric. -->
     <link rel="stylesheet"
         href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css" />
+    <link rel="stylesheet" type="text/css" href="login.css">
 
     <!-- Template styles -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.6.9/core.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="../helper/config.js"></script>
-    <link rel="stylesheet" type="text/css" href="login.css">
-
 </head>
 
 <body>
@@ -63,19 +62,30 @@
 
 
             <div class="view hide" id='rooms'>
-                <div class="title">Wähle einen Ziel-Raum für die Email</div>
+                <div class="title">Zu welchem Thema passt deine E-Mail?</div>
                 <div id="room-list" class="rooms-container">
-                    <select id="room-picker" class="room-picker" size="2">
-                    </select>
+                    <ul id="room-picker" class="room-picker">
+                    </ul>
                 </div>
                 <div class="button-group">
-                    <button class="button button__primary" id="logoff">
-                        <span>Neu anmelden</span>
+                    <button class="button button__primary" id="send">
+                        <span>Senden</span>
                     </button>
                 </div>
+
+                <footer class="footer">
+                    <div class="switch-accounts">
+                        <span id="email" class='footerText'></span>
+                        <button class="footerButton " id="logoff">
+                            Team änderen
+                        </button>
+                        <svg class="icon">
+                            <use href="../../assets/icons.svg#icon-hashtag" />
+                        </svg>
+                    </div>
+                </footer>
             </div>
         </section>
-
     </main>
     <script type="text/javascript" src="login.js"></script>
     <script type="text/javascript" src="../helper/login.js"></script>

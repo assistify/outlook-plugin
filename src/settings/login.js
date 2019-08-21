@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    var config;
     // The initialize function must be run each time a new page is loaded.
     Office.onReady(function (reason) {
 
         $(document).ready(function (e) {
+            var config = {};
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
                 if (config && config.server && config.authToken && config.userId && config.channel) {
@@ -12,7 +12,7 @@
                         if (error) {
                             showError(error);
                         } else {
-                            buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
+                            buildChannelsList($('#room-picker'), config.channel, response.channels);
                             showView('#rooms');
                         }
                     });
@@ -26,26 +26,29 @@
                 const urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$';
                 if ($('#server').val().match(urlCheck)) {                    
                     connectBtn.style.visibility = "visible";
+                    if (e.keyCode === 13) {
+                        $('#navToLogin').click();
+                    }
                 }
                 else {
                     connectBtn.style.visibility = "hidden";
                 }
                 
             });
-            $('#username').on('change', function () {
+            $('#username').on('keyup', function (e) {
                 // TO-DO
             });
-            $('#password').on('change', function () {
-                // TO-DO
+            $('#password').on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    $('#connect').click();
+                }
             });
-
-            var server = $('#server').val();
-            var user = $('#username').val();
-            var password = $('#password').val();
 
             // Handle the connect action on the dialog window.
             $('#connect').on('click', function () {
-
+                var server = $('#server').val();
+                var user = $('#username').val();
+                var password = $('#password').val();
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
                         showError(error);
@@ -60,7 +63,10 @@
                                 if (error) {
                                     showError(error);
                                 } else {
-                                    buildChannelsList($('#room-picker'), config.channel, response.channels, onRoomSelected);
+                                    // show the user logged in.
+                                    var text = 'Eingeloggt im Team '+ config.server;
+                                    $("#email").text(text);
+                                    buildChannelsList($('#room-picker'), config.channel, response.channels);
                                     showView('#rooms');
                                 }
                             });
@@ -69,31 +75,31 @@
                 });
             });
 
-            function onRoomSelected() {
-                config.channel = $("#room-picker option:selected").text();
-
-                // Send configuration to the host.
+            $('#send').on('click', function () {
+                config.action = 'send';
                 sendMessageToHost(JSON.stringify(config));
-            }
+            });
 
             $('#logoff').on('click', function () {
                 //Logout here..
                 var url = '#url';
                 showView(url);
-
+                
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
                             // Error handling
                         } else {
                             // clears all the configuration
-                            resetConfiguration();
+                            config.action = 'loggoff';
+                            sendMessageToHost(JSON.stringify(config));
                         }
                     });
                 }
             });
 
             $('#navToLogin').on('click', function () {
+                // validate existance of URL
                 var login = '#login';
                 if (validateUrl($('#server').val()).status != 200) {
                     const error = {};
@@ -110,6 +116,15 @@
             $('#backToUrl').on('click', function () {
                 var url = '#url';
                 showView(url);
+            });
+
+            $('#room-picker').on('click', 'li', function () {
+                $(this)
+                    .addClass('ui-selected')
+                    .siblings()
+                    .removeClass('ui-selected');
+                // set the channel as selected.
+                config.channel = $(this).text();
             });
 
             function showView(viewName) {
@@ -148,6 +163,10 @@
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
+
+
+
+
 
         });
     });

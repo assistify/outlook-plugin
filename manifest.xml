@@ -6,10 +6,10 @@
   xsi:type="MailApp">
   <Id>05c2e1c9-3e1d-406e-9a91-e9ac64854143</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
+  <ProviderName>Assistify</ProviderName>
+  <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="Assistify"/>
-  <Description DefaultValue="Diskutiere in Assistify"/>
+  <Description DefaultValue="Leite E-Mails nach Assistify weiter"/>
   <IconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
   <HighResolutionIconUrl DefaultValue="https://assistify.github.io/outlook-plugin/assets/assistify.png"/>
   <SupportUrl DefaultValue="https://assistify.de"/>
@@ -83,10 +83,10 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Assitify Add-in"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Diskutiere in Assistify"/>
+        <bt:String id="ActionButton.Label" DefaultValue="In Assistify Diskutieren"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Führt eine Aktion aus bei Klick"/>
+        <bt:String id="ActionButton.Tooltip" DefaultValue="Die E-Mail wird nach Assistify geschickt"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
