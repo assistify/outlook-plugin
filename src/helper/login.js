@@ -37,19 +37,31 @@ function logout(config, callback) {
 
 function getJoinedChannels(config, callback) {
 
-  var url = config.server + '/api/v1/channels.list.joined';
-  $.ajax({
-    url: url,
-    dataType: 'json',
-    method: 'GET',
-    headers: {
-      'X-Auth-Token': config.authToken,
-      'X-User-Id': config.userId,
-    },
-  }).done(function (response) {
-    callback(response);
-  }).fail(function (error) {
-    callback(null, error);
+  var channelsApi = config.server + '/api/v1/channels.list.joined';
+  var groupsApi = config.server + '/api/v1/groups.list';
+
+  $.when(
+    $.ajax({
+      url: channelsApi,
+      dataType: 'json',
+      method: 'GET',
+      headers: {
+        'X-Auth-Token': config.authToken,
+        'X-User-Id': config.userId,
+      },
+    }),
+
+    $.ajax({
+      url: groupsApi,
+      dataType: 'json',
+      method: 'GET',
+      headers: {
+        'X-Auth-Token': config.authToken,
+        'X-User-Id': config.userId,
+      },
+    })
+  ).then(function (channels, groups) {
+    callback(groups[0].groups.concat(channels[0].channels));
   });
 }
 
