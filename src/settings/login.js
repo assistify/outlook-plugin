@@ -123,15 +123,17 @@
             }
 
             function showRooms(config) {
+                // Show the user info when the login is success.
+                var text = 'Eingeloggt im Team ' + config.server;
+                $("#email").text(text);
+                showView('#rooms');
+
+                // Modify the DOM with the user's joined channels(both private and public).
                 getJoinedChannels(config, function (response, error) {
                     if (error) {
                         showError(error);
                     } else {
-                        // Show the user logged in.
-                        var text = 'Eingeloggt im Team ' + config.server;
-                        $("#email").text(text);
                         buildChannelsList($('#room-picker'), config.channel, response);
-                        showView('#rooms');
                     }
                 });
             }
