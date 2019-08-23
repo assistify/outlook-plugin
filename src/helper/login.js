@@ -73,7 +73,6 @@ function buildChannelsList(parent, prevChannel, channels) {
   channels.forEach(function (channel) {
     $('<li>')
       .attr('id', channel._id)
-      .val(channel.name)
       .text(channel.name)
       .appendTo(parent);
   });
