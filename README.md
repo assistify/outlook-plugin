@@ -9,7 +9,7 @@ your Outlook instance. This connection persists, so this is not necessary the ne
 When you send a message to the chat, you are asked to select a chat channel / room. In this room, the plugin
 creates a new discussion, so that you and your team can discuss the e-mail in this new discussion.
 
-## Developing the pluing
+## Developing the plugin
 
 If you want to change something on your local version of the plugin, you can setup a local server, which
 serves the modified pages of the plugin to outlook.
