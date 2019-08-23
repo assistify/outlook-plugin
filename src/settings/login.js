@@ -5,6 +5,7 @@
 
         $(document).ready(function (e) {
             var config = {};
+            var rooms;
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
                 if (isValidConfig(config)) {
@@ -92,10 +93,14 @@
                     .addClass('ui-selected')
                     .siblings()
                     .removeClass('ui-selected');
-                // Set the channel as selected.
+                // Read additional info from the selected channel.
                 config.channel = $(this).text();
+                config.channel_id = $(this).attr('id');
+                var selectedRoom= rooms.find(function(room){
+                    return (room._id === config.channel_id );
+                });
+                config.channelType = selectedRoom.t;
             });
-
             function showView(viewName) {
                 $('.view').hide();
                 $(viewName).show();
@@ -133,7 +138,9 @@
                     if (error) {
                         showError(error);
                     } else {
-                        buildChannelsList($('#room-picker'), config.channel, response);
+                        //Assign rooms to local variable
+                        rooms = response;
+                        buildChannelsList($('#room-picker'), config.channel, rooms);
                     }
                 });
             }

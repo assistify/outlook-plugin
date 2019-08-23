@@ -21,7 +21,7 @@ function getItem(accessToken, itemId, callback) {
     });
 }
 
-function getRoom(config, callback) {
+/* function getRoom(config, callback) {
   var url = config.server + '/api/v1/channels.info';
   $.ajax({
     url: url,
@@ -48,10 +48,17 @@ function getRoom(config, callback) {
   }).fail(function (error) {
     callback(null, error);
   });
-}
+} */
+
 
 function getParentRoomMembers(config, callback) {
-  var url = config.server + '/api/v1/channels.members';
+  var url;
+  if (config.channelType === 'p') {
+    url = config.server + '/api/v1/groups.members';
+  } else {
+    url = config.server + '/api/v1/channels.members';
+  }
+  
   $.ajax({
     url: url,
     dataType: 'json',
@@ -61,7 +68,7 @@ function getParentRoomMembers(config, callback) {
       'X-User-Id': config.userId,
     },
     data: {
-      roomName: config.channel || 'general',
+      roomName: config.channel
     },
   }).done(function (response) {
     callback(response);
@@ -94,14 +101,14 @@ function createNewDiscussion(config, discussion, callback) {
 
 function createDiscussion(config, mail, callback) {
   // Get the room in which the mail will posted.
-  getRoom(config, function (response, error) {
+  getParentRoomMembers(config, function (response, error) {
     if (error) {
       callback(null, error);
     } else {
       var discussion = {
         parentId: response.channel._id,
         name: mail.Subject,
-        members: response.members || []
+        members: response.members || [],
       };
       //Create a new channel
       createNewDiscussion(config, discussion, function (response, error) {
@@ -147,7 +154,7 @@ function postEMail(config, mail, callback) {
       }).done(function (response) {
         return sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid).done(function () {
           callback(response);
-        })
+        });
       }).fail(function (error) {
         callback(null, error);
       });
@@ -166,6 +173,6 @@ function postEMail(config, mail, callback) {
         u: userId,
         p: parent
       }
-    })
+    });
   }
 }
