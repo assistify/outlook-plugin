@@ -21,36 +21,6 @@ function getItem(accessToken, itemId, callback) {
     });
 }
 
-/* function getRoom(config, callback) {
-  var url = config.server + '/api/v1/channels.info';
-  $.ajax({
-    url: url,
-    dataType: 'json',
-    method: 'GET',
-    headers: {
-      'X-Auth-Token': config.authToken,
-      'X-User-Id': config.userId,
-    },
-    data: {
-      roomName: config.channel || 'general',
-    },
-  }).done(function (response) {
-    getParentRoomMembers(config, function (mresponse, error) {
-      if (error) {
-        callback(null, error);
-      } else {
-        response.members = mresponse.members.map(function (member) {
-          return member.username;
-        });
-        callback(response);
-      }
-    });
-  }).fail(function (error) {
-    callback(null, error);
-  });
-} */
-
-
 function getParentRoomMembers(config, callback) {
   var url;
   if (config.channelType === 'p') {
@@ -68,7 +38,7 @@ function getParentRoomMembers(config, callback) {
       'X-User-Id': config.userId,
     },
     data: {
-      roomName: config.channel
+      roomId: config.channelId
     },
   }).done(function (response) {
     callback(response);
@@ -106,7 +76,7 @@ function createDiscussion(config, mail, callback) {
       callback(null, error);
     } else {
       var discussion = {
-        parentId: response.channel._id,
+        parentId: config.channelId,
         name: mail.Subject,
         members: response.members || [],
       };

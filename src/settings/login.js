@@ -31,26 +31,21 @@
                 var user = $('#username').val();
                 var password = $('#password').val();
 
-                if (!isValidConfig(config)) {
-                    login({ server: server, user: user, password: password }, function (response, error) {
-                        if (error) {
+                login({ server: server, user: user, password: password }, function (response, error) {
+                    if (error) {
+                        showError(error);
+                    } else {
+                        if (response.status === 'error') {
                             showError(error);
                         } else {
-                            if (response.status === 'error') {
-                                showError(error);
-                            } else {
-                                config.server = server;
-                                config.userId = response.data.userId;
-                                config.authToken = response.data.authToken;
-                                // Allow user to select a room to post the email
-                                showRooms(config);
-                            }
+                            config.server = server;
+                            config.userId = response.data.userId;
+                            config.authToken = response.data.authToken;
+                            // Allow user to select a room to post the email
+                            showRooms(config);
                         }
-                    });
-                } else {
-                    // Fall back: To prevent multiple duplicate logins.
-                    showRooms(config);
-                }
+                    }
+                });
             });
 
             $('#send').on('click', function () {
@@ -94,10 +89,9 @@
                     .siblings()
                     .removeClass('ui-selected');
                 // Read additional info from the selected channel.
-                config.channel = $(this).text();
-                config.channel_id = $(this).attr('id');
-                var selectedRoom= rooms.find(function(room){
-                    return (room._id === config.channel_id );
+                config.channelId = $(this).attr('id');
+                var selectedRoom = rooms.find(function (room) {
+                    return (room._id === config.channelId);
                 });
                 config.channelType = selectedRoom.t;
             });
@@ -140,13 +134,13 @@
                     } else {
                         //Assign rooms to local variable
                         rooms = response;
-                        buildChannelsList($('#room-picker'), config.channel, rooms);
+                        buildChannelsList($('#room-picker'), config.channelId, rooms);
                     }
                 });
             }
 
             function isValidConfig(config) {
-                return config && config.server && config.authToken && config.userId && config.channel;
+                return config && config.server && config.authToken && config.userId && config.channelId;
             }
         });
     });
