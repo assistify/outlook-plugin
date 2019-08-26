@@ -39,3 +39,15 @@ The plugin can be debugged in the developer tools of Chrome. If you have a local
 add a line with the `debugger` command in the JavaScript code to stop at this location, because it is sometimes
 difficult to identify the file between the several hundred (!) files that Outlook loads.
 
+## Logging
+
+Events will be logged only if hosted somewhere different than GitHub pages on a server or docker container running Node.js.
+
+The small Node.js based server only serves the plugin files, and injects different URLs to the manifest.xml and message.js files to enable logging to a loggia-Host.
+
+All URLs are given as environment variables to the Node.js server:
+
+    LOGGER_URL=https://internal.server.running.loggia
+    INTERNAL_PLUGIN_URL=https://internal.server.running.index.js
+    PUBLIC_PLUGIN_URL=https://assistify.github.io/outlook-plugin
+    Optionally, you can use DEBUG=true to log all request to the console
