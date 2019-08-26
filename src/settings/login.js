@@ -23,8 +23,7 @@
             connectBtn.disabled = true;
 
             $('#server').keyup(function () {
-                var urlCheck = '^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?$';
-                if ($('#server').val().match(urlCheck)) {                    
+                if ($('#server').val().match(/^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?$/)) {                    
                     connectBtn.disabled = false;
                     if (e.keyCode === 13) {
                         $('#navToLogin').click();
