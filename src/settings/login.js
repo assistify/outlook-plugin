@@ -5,17 +5,12 @@
 
         $(document).ready(function (e) {
             var config = {};
+            var rooms;
             if (window.location.search) {
                 config = JSON.parse(getParameterByName('param'));
-                if (config && config.server && config.authToken && config.userId && config.channel) {
-                    getJoinedChannels(config, function (response, error) {
-                        if (error) {
-                            showError(error);
-                        } else {
-                            buildChannelsList($('#room-picker'), config.channel, response.channels);
-                            showView('#rooms');
-                        }
-                    });
+                if (isValidConfig(config)) {
+                    // Valid user preference exists, skip login screen
+                    showRooms(config);
                 }
             }
 
@@ -34,9 +29,6 @@
                 }
                 
             });
-            $('#username').on('keyup', function (e) {
-                // TO-DO
-            });
             $('#password').on('keyup', function (e) {
                 if (e.keyCode === 13) {
                     $('#connect').click();
@@ -48,6 +40,7 @@
                 var server = $('#server').val();
                 var user = $('#username').val();
                 var password = $('#password').val();
+
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
                         showError(error);
@@ -58,17 +51,8 @@
                             config.server = server;
                             config.userId = response.data.userId;
                             config.authToken = response.data.authToken;
-                            getJoinedChannels(config, function (response, error) {
-                                if (error) {
-                                    showError(error);
-                                } else {
-                                    // show the user logged in.
-                                    var text = 'Eingeloggt im Team '+ config.server;
-                                    $("#email").text(text);
-                                    buildChannelsList($('#room-picker'), config.channel, response.channels);
-                                    showView('#rooms');
-                                }
-                            });
+                            // Allow user to select a room to post the email
+                            showRooms(config);
                         }
                     }
                 });
@@ -80,16 +64,17 @@
             });
 
             $('#logoff').on('click', function () {
-                //Logout here..
+                //Go back to URL page
                 var url = '#url';
                 showView(url);
-                
+
+                // Also logout the user session from Rocket.Chat
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
                             // Error handling
                         } else {
-                            // clears all the configuration
+                            // Clear all the user preference at this point
                             config.action = 'loggoff';
                             sendMessageToHost(JSON.stringify(config));
                         }
@@ -98,7 +83,7 @@
             });
 
             $('#navToLogin').on('click', function () {
-                // validate existance of URL
+                // Validate existance of URL
                 var login = '#login';
                 if (validateUrl($('#server').val()).status != 200) {
                     var error = {};
@@ -122,10 +107,13 @@
                     .addClass('ui-selected')
                     .siblings()
                     .removeClass('ui-selected');
-                // set the channel as selected.
-                config.channel = $(this).text();
+                // Read additional info from the selected channel.
+                config.channelId = $(this).attr('id');
+                var selectedRoom = rooms.find(function (room) {
+                    return (room._id === config.channelId);
+                });
+                config.channelType = selectedRoom.t;
             });
-
             function showView(viewName) {
                 $('.view').hide();
                 $(viewName).show();
@@ -163,10 +151,27 @@
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
 
+            function showRooms(config) {
+                // Show the user info when the login is success.
+                var text = 'Eingeloggt im Team ' + config.server;
+                $("#email").text(text);
+                showView('#rooms');
 
+                // Modify the DOM with the user's joined channels(both private and public).
+                getJoinedChannels(config, function (response, error) {
+                    if (error) {
+                        showError(error);
+                    } else {
+                        //Assign rooms to local variable
+                        rooms = response;
+                        buildChannelsList($('#room-picker'), config.channelId, rooms);
+                    }
+                });
+            }
 
-
-
+            function isValidConfig(config) {
+                return config && config.server && config.authToken && config.userId && config.channelId;
+            }
         });
     });
 })();
