@@ -3,15 +3,22 @@
  * See LICENSE in the project root for license information.
  */
 
-Office.onReady(info => {
-  // If needed, Office.js is ready to be called
-});
+var config;
+var configEvent;
+
+// The initialize function must be run each time a new page is loaded.
+Office.initialize = function (reason) {
+  config = getConfiguration();
+};
 
 function showConfigDialog(event) {
   // Not Configured: Show the configuration dialog
   configEvent = event;
   var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
   var dialogOptions = { width: 40, height: 60, displayInIframe: true };
+  if (config) {
+    url = url + '?param=' + encodeURIComponent(JSON.stringify(config));
+  }
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
     loginDialog.addEventHandler(Microsoft.Office.WebExtension.EventType.DialogMessageReceived, processMessage);
@@ -24,7 +31,7 @@ function processMessage(message) {
   setConfiguration(config, function (result) {
     loginDialog.close();
     loginDialog = null;
-    // Implicitly invoke the send message function
+    // Send message implicitly
     send(configEvent);
   });
 
@@ -34,12 +41,6 @@ function dialogClosed(message) {
   loginDialog = null;
   configEvent.completed();
   configEvent = null;
-}
-
-
-function isValidConfig(config) {
-  return false;
-  //return config && config.server && config.userId && config.authToken && config.channel ;
 }
 
 function getItemRestId() {
@@ -60,16 +61,8 @@ function getItemRestId() {
  * @param event {Office.AddinCommands.Event}
  */
 function forward(event) {
-
-  //Get the configuration for the Add-in.
-  var config = getConfiguration();
-
-  // Configuration must contain the Server Url, UserId & authToken.(if already logged in via api)
-  if (!isValidConfig(config)) {
-    showConfigDialog(event);
-  } else {
-    send(event);
-  }
+  // Show the configuartion dialog.
+  showConfigDialog(event);
 }
 
 function send(event) {
@@ -87,8 +80,7 @@ function send(event) {
           if (error) {
             showError(error);
           } else {
-            var mail = response;
-            postEMail(config, mail, function (response, error) {
+            postEMail(getConfiguration(), response, function (response, error) {
               if (error) {
                 // show error
               } else {
@@ -117,7 +109,7 @@ function send(event) {
 }
 
 function showError(error) {
- // To Do Error display
+  // To Do Error display
 }
 
 function getGlobal() {

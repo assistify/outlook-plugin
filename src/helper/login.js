@@ -17,7 +17,7 @@ function login(config, callback) {
 }
 
 function logout(config, callback) {
-  
+
   var url = config.server + '/api/v1/logout';
 
   $.ajax({
@@ -53,23 +53,19 @@ function getJoinedChannels(config, callback) {
   });
 }
 
-function buildChannelsList(parent, channels, callback) {
+function buildChannelsList(parent, prevChannel, channels, callback) {
+  if (prevChannel) {
+    $(parent).val(prevChannel);
+  }
+
   channels.forEach(function (channel) {
-
-    var list = $('<li>')
-      .appendTo(parent);
-
-    var item = $('<div>')
-      .attr('id', channel._id)
-      .addClass('listitem')
+    var item = $('<option>')
       .val(channel.name)
-      .appendTo(list);
-
-    var text = $('<label>')
       .text(channel.name)
-      .appendTo(item);
-
-    item.on('click', { channel: $('#' + channel._id).val() }, callback);
+      .appendTo(parent);
   });
+
+  $(parent).change(callback);
+
 
 }

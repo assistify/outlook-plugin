@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>Settings</title>
+    <title>Einstellungen</title>
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
 
@@ -13,7 +13,6 @@
         href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css" />
 
     <!-- Template styles -->
-    <!-- <link href="dialog.css" rel="stylesheet" type="text/css" /> -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.6.9/core.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="../helper/config.js"></script>
@@ -27,7 +26,7 @@
             <img width="90" height="90" src="../../assets/assistify.png" alt="Assistify" title="Assistify" />
         </header>
         <section class="login-area">
-            <div class="view default" id="url">
+            <div class="view" id="url">
                 <div class="input input__wrapper">
                     <input class="input__elememt" id="server" type="text" value="" autocapitalize="off"
                         autocorrect="off" placeholder="URL https://" />
@@ -35,7 +34,7 @@
                 </div>
                 <div class="button-group">
                     <button class="button button__primary" id="navToLogin">
-                        <span>Next</span>
+                        <span>Weiter</span>
                     </button>
                 </div>
             </div>
@@ -49,27 +48,24 @@
                 </div>
                 <div class="button-group">
                     <button class="button button__primary" id="connect">
-                        <span>Connect</span>
+                        <span>Verbinden</span>
                     </button>
                     <button class="button button__secondary" id="backToUrl">
-                        <span>Back</span>
+                        <span>Zurück</span>
                     </button>
                 </div>
             </div>
 
 
             <div class="view hide" id='rooms'>
-                <div class="list-title">Choose a channel to post the mail</div>
+                <div class="title">Wähle einen Ziel-Raum für die Email</div>
                 <div id="room-list" class="rooms-container">
-                    <ul id="room-list-picker">
-                    </ul>
+                    <select id="room-picker" class="room-picker" size="2">
+                    </select>
                 </div>
                 <div class="button-group">
-                    <button class="button button__primary" id="save">
-                        <span>Save</span>
-                    </button>
-                    <button class="button button__secondary" id="cancel">
-                        <span>Cancel</span>
+                    <button class="button button__primary" id="logoff">
+                        <span>Neu anmelden</span>
                     </button>
                 </div>
             </div>
