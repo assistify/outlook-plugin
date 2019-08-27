@@ -7,9 +7,12 @@
             var config = {};
             var rooms;
             if (window.location.search) {
-                config = JSON.parse(getParameterByName('param'));
-                if (isValidConfig(config)) {
+                var params = JSON.parse(getParameterByName('param'));
+                if (params && params.status === 'success') {
+                    showSuccess();
+                } else if (isValidConfig(params)) {
                     // Valid user preference exists, skip login screen
+                    config = params;
                     showRooms(config);
                 }
             }
@@ -50,6 +53,11 @@
 
             $('#send').on('click', function () {
                 config.action = 'send';
+                sendMessageToHost(JSON.stringify(config));
+            });
+
+            $('#close').on('click', function () {
+                config.action = 'close';
                 sendMessageToHost(JSON.stringify(config));
             });
 
@@ -139,6 +147,10 @@
                 });
             }
 
+            function showSuccess() {
+                var success = '#success';
+                showView(success);
+            }
             function isValidConfig(config) {
                 return config && config.server && config.authToken && config.userId && config.channelId;
             }
