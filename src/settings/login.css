@@ -124,7 +124,7 @@ ul {
 }
 
 #room-picker li {
-    padding-top: 10px;
+    padding-top: 5px;
     list-style: none;
     display: list-item;
     border-width: 1px;
@@ -133,7 +133,7 @@ ul {
     border-style: solid;
     padding-left: 10px;
     font-size: 14px;
-    height: 30px;
+    height: 25px;
     cursor: default;
 }
 
@@ -172,4 +172,13 @@ ul {
     font-weight: inherit;
     color: #d4145a;
     font-size: inherit;
+}
+
+.success-wrapper {
+    font-size: 14px;
+    font-style: inherit;
+}
+
+.icon-success {
+    width: 100%;
 }
