@@ -65,15 +65,19 @@ function getJoinedChannels(config, callback) {
   });
 }
 
-function buildChannelsList(parent, prevChannel, channels) {
-  if (prevChannel) {
-    $(parent).val(prevChannel);
-  }
-
+function buildChannelsList(parent, prevChannelId, channels) {
   channels.forEach(function (channel) {
-    $('<li>')
-      .attr('id', channel._id)
-      .text(channel.name)
-      .appendTo(parent);
+    if (channel._id === prevChannelId) {
+      $('<li>')
+        .insertBefore(parent.find("li").eq(0))
+        .attr('id', channel._id)
+        .addClass('ui-selected')
+        .text(channel.name);
+    } else {
+      $('<li>')
+        .attr('id', channel._id)
+        .text(channel.name)
+        .appendTo(parent);
+    }
   });
 }
