@@ -109,6 +109,7 @@ function postEMail(config, mail, callback) {
       callback(error);
     } else {
       var url = config.server + '/api/v1/chat.postMessage';
+      var discussion = response.discussion.name;
       $.ajax({
         url: url,
         dataType: 'json',
@@ -118,7 +119,8 @@ function postEMail(config, mail, callback) {
           'X-User-Id': config.userId,
         },
         data: {
-          'roomId': response.discussion.rid,
+          'roomId': response.discussion._id,
+          'channel': '#' + discussion,
           'text': markdownText
         }
       }).done(function (response) {
