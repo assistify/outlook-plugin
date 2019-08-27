@@ -150,6 +150,9 @@
             function showSuccess() {
                 var success = '#success';
                 showView(success);
+                setTimeout(function(){
+                    $('#close').trigger("click");
+                },28000); // Close the dialog window manually, if the users did not. We need to do this to make sure that the event is completed.
             }
             function isValidConfig(config) {
                 return config && config.server && config.authToken && config.userId && config.channelId;
