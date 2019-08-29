@@ -8,7 +8,6 @@ var config;
 
 // The initialize function must be run each time a new page is loaded.
 Office.initialize = function (reason) {
-  config = getConfiguration();
 };
 
 function showDialog(event, data) {
@@ -78,7 +77,7 @@ function getItemRestId() {
  */
 function forward(event) {
   // Show the configuartion dialog.
-  showDialog(event, config);
+  showDialog(event, getConfiguration());
 }
 
 function send(event) {
