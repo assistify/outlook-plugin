@@ -108,7 +108,7 @@ function send(event) {
                 result.status = 'success';
                 var message = {
                   type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-                  message: "Mail forwarded.",
+                  message: "Diskussion in Assistify erfolgreich erstellt.",
                   icon: "success.svg",
                   persistent: true
                 };
