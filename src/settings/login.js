@@ -71,19 +71,18 @@
                 var url = '#url';
                 showView(url);
 
+                // Clear Room list from the UI
+                $('#room-picker').empty();
+
                 // Also logout the user session from Rocket.Chat
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
                             // Error handling
                         } else {
-
                             // Remove the user preference from storage
                             config.action = 'logoff';
                             sendMessageToHost(JSON.stringify(config));
-
-                            // Clear variables from the UI Elements
-                            $('#room-picker').empty();
                         }
                     });
                 }
