@@ -16,9 +16,6 @@
                     // Valid user preference exists, skip login screen
                     config = params;
                     showRooms(config);
-                } else {
-                    // No navigation page found? Show the Login Page.
-                    showView('#url');
                 }
             }
 
