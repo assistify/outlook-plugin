@@ -197,3 +197,19 @@ ul {
 .success_message_block {
     text-align: center;
 }
+
+.login_banner {
+    font: inherit;
+    font-size: 14px;
+    text-align: center;
+    color: #5a6175;
+}
+
+.banner_text {
+    font-size: inherit;
+}
+
+.banner_title {
+    margin: 0px;
+    padding: 0px;
+}
