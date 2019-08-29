@@ -6,9 +6,11 @@
         $(document).ready(function (e) {
             var config = {};
             var rooms;
+            var messageUrl;
             if (window.location.search) {
-                var params = JSON.parse(getParameterByName('param'));
+                var params = JSON.parse(getParameterByName('params'));
                 if (params && params.status === 'success') {
+                    messageUrl = params.server + '/group/' + params.discussion.substring(1) + '?msg=' + params.message;
                     showSuccess();
                 } else if (isValidConfig(params)) {
                     // Valid user preference exists, skip login screen
@@ -56,7 +58,10 @@
                 sendMessageToHost(JSON.stringify(config));
             });
 
-            $('#close').on('click', function () {
+            $('#close').on('click', function (event, trigger) {
+                if (!trigger || trigger !== "autoClose") {
+                    window.open(messageUrl, '_blank');
+                }
                 config.action = 'close';
                 sendMessageToHost(JSON.stringify(config));
             });
@@ -72,9 +77,13 @@
                         if (error) {
                             // Error handling
                         } else {
-                            // Clear all the user preference at this point
-                            config.action = 'loggoff';
+
+                            // Remove the user preference from storage
+                            config.action = 'logoff';
                             sendMessageToHost(JSON.stringify(config));
+
+                            // Clear variables from the UI Elements
+                            $('#room-picker').empty();
                         }
                     });
                 }
@@ -150,9 +159,9 @@
             function showSuccess() {
                 var success = '#success';
                 showView(success);
-                setTimeout(function(){
-                    $('#close').trigger("click");
-                },28000); // Close the dialog window manually, if the users did not. We need to do this to make sure that the event is completed.
+                setTimeout(function () {
+                    $('#close').trigger("click", "autoClose");
+                }, 25000); // Close the dialog window manually, when user forgets to close. We need to do this to make sure that the event is completed.
             }
             function isValidConfig(config) {
                 return config && config.server && config.authToken && config.userId && config.channelId;
