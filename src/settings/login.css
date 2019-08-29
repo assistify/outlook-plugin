@@ -24,7 +24,6 @@ body {
 .input {
     position: relative;
     width: 100%;
-
 }
 
 .input__wrapper {
@@ -54,7 +53,7 @@ body {
     z-index: 1;
 
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
     padding: 20px;
 
@@ -97,7 +96,7 @@ ul {
 
 
 .rooms-container {
-    height: 30vh;
+    height: 38vh;
     margin-top: 10px;
     margin-bottom: 10px;
     border: 0.5px solid #d2d2d2;
@@ -131,7 +130,7 @@ ul {
     border-color: #e1e5e8;
     background-color: transparent;
     border-style: solid;
-    padding-left: 10px;
+    padding-left: 20px;
     font-size: 14px;
     height: 25px;
     cursor: default;
