@@ -4,19 +4,20 @@
  */
 
 var configEvent;
+var config;
 
 // The initialize function must be run each time a new page is loaded.
 Office.initialize = function (reason) {
- 
+  config = getConfiguration();
 };
 
 function showDialog(event, data) {
   //Show the dialog window
   configEvent = event;
   var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
-  var dialogOptions = { width: 30, height: 50, displayInIframe: true };
+  var dialogOptions = { width: 30, height: 60, displayInIframe: true };
   if (data) {
-    url = url + '?param=' + encodeURIComponent(JSON.stringify(data));
+    url = url + '?params=' + encodeURIComponent(JSON.stringify(data));
   }
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
@@ -37,6 +38,7 @@ function processMessage(arg) {
       setConfiguration(messageFromDialog, function (result) {
         loginDialog.close();
         loginDialog = null;
+        config = messageFromDialog; // Update the config with the new data
         // Send message 
         send(configEvent);
       });
@@ -76,7 +78,7 @@ function getItemRestId() {
  */
 function forward(event) {
   // Show the configuartion dialog.
-  showDialog(event, getConfiguration());
+  showDialog(event, config);
 }
 
 function send(event) {
@@ -94,7 +96,7 @@ function send(event) {
           if (error) {
             showError(error);
           } else {
-            postEMail(getConfiguration(), response, function (response, error) {
+            postEMail(config, response, function (response, error) {
               if (error) {
                 // Be sure to indicate when the add-in command function is complete
                 event.completed();
@@ -103,6 +105,7 @@ function send(event) {
                 var result = {};
                 result.discussion = response.channel;
                 result.message = response.message._id;
+                result.server = config.server;
                 result.status = 'success';
                 var message = {
                   type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
