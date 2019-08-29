@@ -24,6 +24,7 @@ function resetConfiguration(config) {
     Office.context.roamingSettings.remove('authToken');
     Office.context.roamingSettings.remove('channelId');
     Office.context.roamingSettings.remove('channelType');
+    Office.context.roamingSettings.saveAsync();
 }
 
 
