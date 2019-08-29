@@ -55,7 +55,7 @@ body {
 
     width: 100%;
     max-width: 300px;
-    margin: 20px auto;
+    margin: auto;
     padding: 20px;
 
     border-radius: 2px;
@@ -147,9 +147,10 @@ ul {
     padding-bottom: 10px;
 }
 
-.footerText{
+.footerText {
     color: #666;
 }
+
 .switch-accounts {
     text-align: left;
     margin-right: auto;
@@ -179,6 +180,21 @@ ul {
     font-style: inherit;
 }
 
-.icon-success {
-    width: 100%;
+.img_success {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.success-title {
+    text-align: center;
+    font-size: large;
+}
+
+.success_message {
+    font-size: 14px;
+}
+
+.success_message_block {
+    text-align: center;
 }
