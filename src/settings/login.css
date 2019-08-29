@@ -5,7 +5,8 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    font-family: 'Arial';
+    font-family: "Arial", "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 .header {
@@ -212,4 +213,15 @@ ul {
 .banner_title {
     margin: 0px;
     padding: 0px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 50px;
 }
