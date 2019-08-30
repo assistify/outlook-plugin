@@ -1,3 +1,5 @@
+var usageLogger = null;
+
 function getItem(accessToken, itemId, callback) {
   // Construct the REST URL to the current item
   // Details for formatting the URL can be found at
@@ -124,9 +126,14 @@ function postEMail(config, mail, callback) {
           'text': markdownText
         }
       }).done(function (response) {
-        return sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid).done(function () {
-          callback(response);
-        });
+        if (usageLogger) {
+          sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid)
+            .done(function () {
+              callback(response);
+            })
+        } else {
+          callback(response)
+        }
       }).fail(function (error) {
         callback(null, error);
       });
@@ -135,7 +142,7 @@ function postEMail(config, mail, callback) {
 
   function sendToLog(env, userId, parent) {
     return $.ajax({
-      url: 'https://bit.ly/2Z83Luw',
+      url: usageLogger,
       dataType: 'json',
       method: 'POST',
       data: {
@@ -145,6 +152,6 @@ function postEMail(config, mail, callback) {
         u: userId,
         p: parent
       }
-    });
+    })
   }
 }
