@@ -3,8 +3,8 @@
  * See LICENSE in the project root for license information.
  */
 
-var configEvent;
 var config;
+var configEvent;
 
 // The initialize function must be run each time a new page is loaded.
 Office.initialize = function (reason) {
