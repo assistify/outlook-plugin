@@ -14,10 +14,20 @@
                 }
             }
 
-            $('#server').on('keyup', function (e) {
-                if (e.keyCode === 13) {
-                    $('#navToLogin').click();
+            var connectBtn = document.getElementById('navToLogin');
+            connectBtn.disabled = true;
+
+            $('#server').keyup(function () {
+                if ($('#server').val().match(/^(https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?$/)) {
+                    connectBtn.disabled = false;
+                    if (e.keyCode === 13) {
+                        $('#navToLogin').click();
+                    }
                 }
+                else {
+                    connectBtn.disabled = true;
+                }
+
             });
             $('#password').on('keyup', function (e) {
                 if (e.keyCode === 13) {
@@ -75,7 +85,14 @@
             $('#navToLogin').on('click', function () {
                 // Validate existance of URL
                 var login = '#login';
-                showView(login);
+                validateUrl($('#server').val(), function (response, error) {
+                    if (error && error.status !== 200) {
+                        error.statusText = 'Ungültige Server URL';
+                        showError(error);
+                    } else {
+                        showView(login);
+                    }
+                });
             });
 
             $('#backToUrl').on('click', function () {
@@ -106,7 +123,21 @@
             }
 
             function showError(error) {
-                // Handle unexpected error here...
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                x.textContent = error.statusText;
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+
+            function validateUrl(server, callback) {
+                $.ajax({
+                    url: server + '/api/v1/info',
+                    timeout: 2000 // Timesout after 3 secs
+                }).done(function (response) {
+                    callback(response);
+                }).fail(function (error) {
+                    callback(null, error);
+                });
             }
 
             function getParameterByName(name, url) {

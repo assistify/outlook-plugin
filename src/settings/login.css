@@ -84,6 +84,12 @@ body {
     color: black;
 }
 
+.button__primary:disabled {
+    background: #F5F5F5;
+    color : #C3C3C3;
+}
+
+
 ul {
     padding: 0px;
     list-style: none;
@@ -139,6 +145,32 @@ ul {
 
 #room-picker li:hover {
     background-color: rgba(99, 185, 175, 1) !important;
+}
+
+select:focus::-ms-value {
+    background-color: transparent;
+  }
+
+#snackbar {
+visibility: hidden;
+min-width: 250px;
+margin-left: -125px;
+background-color: #d4145a;
+color: #fff;
+text-align: center;
+border-radius: 2px;
+padding: 16px;
+position: fixed;
+z-index: 1;
+left: 50%;
+bottom: 30px;
+font-size: 17px;
+}
+
+#snackbar.show {
+visibility: visible;
+-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
 .footer {
