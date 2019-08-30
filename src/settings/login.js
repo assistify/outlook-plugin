@@ -40,7 +40,6 @@
                 var server = $('#server').val();
                 var user = $('#username').val();
                 var password = $('#password').val();
-
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
                         showError(error);
