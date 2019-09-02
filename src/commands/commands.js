@@ -28,16 +28,21 @@ function showDialog(event, data) {
 function processMessage(arg) {
   var messageFromDialog = JSON.parse(arg.message);
   switch (messageFromDialog.action) {
+    case 'login':
+      setLoginConfiguration(messageFromDialog, function (result) {
+        config = messageFromDialog; // Update the global config with the information from the login dialog
+      });
+      break;
     case 'logoff':
       // resets the user's preference
-      resetConfiguration(messageFromDialog);
+      resetAllConfiguration(messageFromDialog);
       break;
     case 'send':
-      // Stores the user's preference
-      setConfiguration(messageFromDialog, function (result) {
+      // Store the room details from the user selection
+      setRoomConfiguration(messageFromDialog, function (result) {
         loginDialog.close();
         loginDialog = null;
-        config = messageFromDialog; // Update the config with the new data
+        config = messageFromDialog;
         // Send message 
         send(configEvent);
       });
@@ -77,7 +82,7 @@ function getItemRestId() {
  */
 function forward(event) {
   // Show the configuartion dialog.
-  showDialog(event, getConfiguration());
+  showDialog(event, getAllConfiguration());
 }
 
 function send(event) {
