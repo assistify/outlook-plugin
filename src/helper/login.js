@@ -63,13 +63,7 @@ function getJoinedChannels(config, callback) {
   ).then(function (channels, groups) {
     var rooms = groups[0].groups.concat(channels[0].channels);
     callback(rooms.sort(function(first,second) {
-      if ( first.name.toUpperCase() < second.name.toUpperCase() ){
-        return -1;
-      }
-      if ( first.name.toUpperCase() > second.name.toUpperCase() ){
-        return 1;
-      }
-      return 0;
+      return first.name.localeCompare(second.name);
     }));
   });
 }
