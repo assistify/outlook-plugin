@@ -11,7 +11,7 @@
                 var params = JSON.parse(getParameterByName('params'));
                 if (params && params.status === 'success') {
                     messageUrl = params.server + '/group/' + params.discussion.substring(1) + '?msg=' + params.message;
-                    showSuccess();
+                    showSuccessDialog();
                 } else if (isValidConfig(params)) {
                     // Valid user preference exists, skip login screen
                     config = params;
@@ -47,6 +47,7 @@
                 var password = $('#password').val();
                 login({ server: server, user: user, password: password }, function (response, error) {
                     if (error) {
+                        error.statusText = 'Ungültiger Benutzername oder Passwort';
                         showError(error);
                     } else {
                         if (response.status === 'error') {
@@ -83,15 +84,18 @@
                 // Clear Room list from the UI
                 $('#room-picker').empty();
 
+                // Invalidate the user configuration stored in the outlook local storage.
+                config.action = 'logoff';
+                sendMessageToHost(JSON.stringify(config));
+
                 // Also logout the user session from Rocket.Chat
                 if (config.authToken && config.userId) {
                     logout(config, function (response, error) {
                         if (error) {
-                            // Error handling
+                            showError(error);
                         } else {
-                            // Remove the user preference from storage
-                            config.action = 'logoff';
-                            sendMessageToHost(JSON.stringify(config));
+                            var message = response.data.message;
+                            showSuccess(message);
                         }
                     });
                 }
@@ -139,8 +143,15 @@
 
             function showError(error) {
                 var x = document.getElementById("snackbar");
-                x.className = "show";
-                x.textContent = error.statusText;
+                x.className = "showError";
+                x.textContent = error.statusText || error.responseText.message;
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+            }
+
+            function showSuccess(message) {
+                var x = document.getElementById("snackbar");
+                x.className = "showSuccess";
+                x.textContent = message;
                 setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
             }
 
@@ -185,7 +196,7 @@
                 });
             }
 
-            function showSuccess() {
+            function showSuccessDialog() {
                 var success = '#success';
                 showView(success);
                 setTimeout(function () {
