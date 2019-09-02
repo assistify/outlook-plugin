@@ -56,6 +56,11 @@
                             config.server = server;
                             config.userId = response.data.userId;
                             config.authToken = response.data.authToken;
+
+                            // Store the login credentials in the outlook host
+                            config.action = 'login';
+                            sendMessageToHost(JSON.stringify(config));
+
                             // Allow user to select a room to post the email
                             showRooms(config);
                         }
@@ -145,14 +150,14 @@
                 var x = document.getElementById("snackbar");
                 x.className = "showError";
                 x.textContent = error.statusText || error.responseText.message;
-                setTimeout(function () { x.className = ""; }, 5000);
+                setTimeout(function () { x.className = ""; }, 4000);
             }
 
             function showSuccess(message) {
                 var x = document.getElementById("snackbar");
                 x.className = "showSuccess";
                 x.textContent = message;
-                setTimeout(function () { x.className = "";  }, 5000);
+                setTimeout(function () { x.className = ""; }, 4000);
             }
 
             function validateUrl(server, callback) {
@@ -204,7 +209,7 @@
                 }, 25000); // Close the dialog window manually, when user forgets to close. We need to do this to make sure that the event is completed.
             }
             function isValidConfig(config) {
-                return config && config.server && config.authToken && config.userId && config.channelId;
+                return config && config.server && config.authToken && config.userId;
             }
         });
     });
