@@ -145,14 +145,14 @@
                 var x = document.getElementById("snackbar");
                 x.className = "showError";
                 x.textContent = error.statusText || error.responseText.message;
-                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                setTimeout(function () { x.className = ""; }, 5000);
             }
 
             function showSuccess(message) {
                 var x = document.getElementById("snackbar");
                 x.className = "showSuccess";
                 x.textContent = message;
-                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                setTimeout(function () { x.className = "";  }, 5000);
             }
 
             function validateUrl(server, callback) {
