@@ -94,7 +94,7 @@
                         if (error) {
                             showError(error);
                         } else {
-                            var message = response.data.message;
+                            var message = 'Du bist ausgeloggt!';
                             showSuccess(message);
                         }
                     });
