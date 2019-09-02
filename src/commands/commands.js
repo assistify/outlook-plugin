@@ -8,16 +8,15 @@ var configEvent;
 
 // The initialize function must be run each time a new page is loaded.
 Office.initialize = function (reason) {
-  config = getConfiguration();
 };
 
-function showConfigDialog(event) {
-  // Not Configured: Show the configuration dialog
+function showDialog(event, data) {
+  //Show the dialog window
   configEvent = event;
   var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
-  var dialogOptions = { width: 40, height: 60, displayInIframe: true };
-  if (config) {
-    url = url + '?param=' + encodeURIComponent(JSON.stringify(config));
+  var dialogOptions = { width: 30, height: 60, displayInIframe: true };
+  if (data) {
+    url = url + '?params=' + encodeURIComponent(JSON.stringify(data));
   }
   Office.context.ui.displayDialogAsync(url, dialogOptions, function (result) {
     loginDialog = result.value;
@@ -26,28 +25,34 @@ function showConfigDialog(event) {
   });
 }
 
-function processMessage(message) {
-  config = JSON.parse(message.message);
-  switch (config.action) {
+function processMessage(arg) {
+  var messageFromDialog = JSON.parse(arg.message);
+  switch (messageFromDialog.action) {
     case 'logoff':
       // resets the user's preference
-      resetConfiguration(config);
+      resetConfiguration(messageFromDialog);
       break;
     case 'send':
       // Stores the user's preference
-      setConfiguration(config, function (result) {
+      setConfiguration(messageFromDialog, function (result) {
         loginDialog.close();
         loginDialog = null;
-        // Send message implicitly
+        config = messageFromDialog; // Update the config with the new data
+        // Send message 
         send(configEvent);
       });
+      break;
+    case 'close':
+      loginDialog.close();
+      loginDialog = null;
+      configEvent.completed();
       break;
     default:
       break;
   }
 }
 
-function dialogClosed(message) {
+function dialogClosed(arg) {
   loginDialog = null;
   configEvent.completed();
   configEvent = null;
@@ -72,7 +77,7 @@ function getItemRestId() {
  */
 function forward(event) {
   // Show the configuartion dialog.
-  showConfigDialog(event);
+  showDialog(event, getConfiguration());
 }
 
 function send(event) {
@@ -90,22 +95,27 @@ function send(event) {
           if (error) {
             showError(error);
           } else {
-            postEMail(getConfiguration(), response, function (response, error) {
+            postEMail(config, response, function (response, error) {
               if (error) {
+                // Be sure to indicate when the add-in command function is complete
+                event.completed();
                 // show error
               } else {
+                var result = {};
+                result.discussion = response.channel;
+                result.message = response.message._id;
+                result.server = config.server;
+                result.status = 'success';
                 var message = {
                   type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-                  message: "Performed action.",
-                  icon: "Icon.80x80",
+                  message: "Diskussion in Assistify erfolgreich erstellt.",
+                  icon: "success.svg",
                   persistent: true
                 };
-
+                showDialog(event, result);
                 // Show a notification message
                 Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
               }
-              // Be sure to indicate when the add-in command function is complete
-              event.completed();
             });
           }
         });

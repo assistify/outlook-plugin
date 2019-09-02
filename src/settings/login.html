@@ -31,9 +31,14 @@
                 <p>Gib einfach deine Daten ein und wähle einen Raum in dem du die Email diskutieren willst</p>
             </div>
             <div class="view" id="url">
+                <div id=banner class="login_banner">
+                    <h3 class="banner_title">Assistify</h3>
+                    <p class="banner_text">Diskutiere ganz einfach E-Mails mit deinen Kollegen direkt in Assistify!
+                        Melde dich dazu bitte zunächst an.</p>
+                </div>
                 <div class="input input__wrapper">
                     <input class="input__elememt" id="server" type="text" value="" autocapitalize="off"
-                        autocorrect="off" placeholder="URL https://" />
+                        autocorrect="off" placeholder="Workspace URL https://" />
                     <div class="error-display"></div>
                 </div>
                 <div class="button-group">
@@ -63,7 +68,7 @@
 
             <div class="view hide" id='rooms'>
                 <div class="title">Zu welchem Thema passt deine E-Mail?</div>
-                <div id="room-list" class="rooms-container">
+                <div id="room-list" class="rooms-container scrollbar">
                     <ul id="room-picker" class="room-picker">
                     </ul>
                 </div>
@@ -81,6 +86,27 @@
                         </button>
                     </div>
                 </footer>
+            </div>
+
+            <div class="view hide" id="success">
+                <div class="success-header">
+                    <div class="icon-success">
+                        <img class="img_success" width="100" height="80" src="../../assets/success.svg" alt="success"
+                            title="Success" />
+                    </div>
+                </div>
+                <div class="success-title ">
+                    <p>Erfolg!</p>
+                </div>
+                <div class="success_message">
+                    <p class="success_message_block">Deine Diskussion wurde angelegt! Möchtest du noch einen Kommentar
+                        hinzufügen?</span> </p>
+                </div>
+                <div class="button-group">
+                    <button class="button button__primary" id="close">
+                        <span>Zur Diskussion</span>
+                    </button>
+                </div>
             </div>
         </section>
     </main>

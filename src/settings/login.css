@@ -5,7 +5,8 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    font-family: 'Arial';
+    font-family: "Arial", "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 .header {
@@ -24,7 +25,6 @@ body {
 .input {
     position: relative;
     width: 100%;
-
 }
 
 .input__wrapper {
@@ -54,8 +54,8 @@ body {
     z-index: 1;
 
     width: 100%;
-    max-width: 300px;
-    margin: 20px auto;
+    max-width: 400px;
+    margin: auto;
     padding: 20px;
 
     border-radius: 2px;
@@ -103,7 +103,7 @@ ul {
 
 
 .rooms-container {
-    height: 30vh;
+    height: 38vh;
     margin-top: 10px;
     margin-bottom: 10px;
     border: 0.5px solid #d2d2d2;
@@ -130,16 +130,16 @@ ul {
 }
 
 #room-picker li {
-    padding-top: 10px;
+    padding-top: 5px;
     list-style: none;
     display: list-item;
     border-width: 1px;
     border-color: #e1e5e8;
     background-color: transparent;
     border-style: solid;
-    padding-left: 10px;
+    padding-left: 20px;
     font-size: 14px;
-    height: 30px;
+    height: 25px;
     cursor: default;
 }
 
@@ -179,9 +179,10 @@ animation: fadein 0.5s, fadeout 0.5s 2.5s;
     padding-bottom: 10px;
 }
 
-.footerText{
+.footerText {
     color: #666;
 }
+
 .switch-accounts {
     text-align: left;
     margin-right: auto;
@@ -206,7 +207,54 @@ animation: fadein 0.5s, fadeout 0.5s 2.5s;
     font-size: inherit;
 }
 
-.icon {
-width: 20px;
-
+.success-wrapper {
+    font-size: 14px;
+    font-style: inherit;
 }
+
+.img_success {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.success-title {
+    text-align: center;
+    font-size: large;
+}
+
+.success_message {
+    font-size: 14px;
+}
+
+.success_message_block {
+    text-align: center;
+}
+
+.login_banner {
+    font: inherit;
+    font-size: 14px;
+    text-align: center;
+    color: #5a6175;
+}
+
+.banner_text {
+    font-size: inherit;
+}
+
+.banner_title {
+    margin: 0px;
+    padding: 0px;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 50px;
+}
+
