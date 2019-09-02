@@ -130,9 +130,9 @@ function postEMail(config, mail, callback) {
           sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid)
             .done(function () {
               callback(response);
-            })
+            });
         } else {
-          callback(response)
+          callback(response);
         }
       }).fail(function (error) {
         callback(null, error);
@@ -152,6 +152,6 @@ function postEMail(config, mail, callback) {
         u: userId,
         p: parent
       }
-    })
+    });
   }
 }
