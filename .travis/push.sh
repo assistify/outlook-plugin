@@ -8,4 +8,4 @@ git stash
 git checkout ${TARGET_BRANCH}
 git stash pop
 git commit -am "Pushing updates from Master"+$TRAVIS_BUILD_NUMBER
-git push https://${GH_TOKEN}@github.com/assistify/outlook-plugin.git HEAD:gh-pages
+git push --force https://${GH_TOKEN}@github.com/assistify/outlook-plugin.git HEAD:gh-pages
