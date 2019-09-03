@@ -61,7 +61,10 @@ function getJoinedChannels(config, callback) {
       },
     })
   ).then(function (channels, groups) {
-    callback(groups[0].groups.concat(channels[0].channels));
+    var rooms = groups[0].groups.concat(channels[0].channels);
+    callback(rooms.sort(function(first,second) {
+      return first.name.localeCompare(second.name);
+    }));
   });
 }
 
