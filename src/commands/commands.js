@@ -14,7 +14,7 @@ function showDialog(event, data) {
   //Show the dialog window
   configEvent = event;
   var url = new URI('../settings/login.html').absoluteTo(window.location).toString();
-  var dialogOptions = { width: 30, height: 60, displayInIframe: true };
+  var dialogOptions = { width: 40, height: 60, displayInIframe: true };
   if (data) {
     url = url + '?params=' + encodeURIComponent(JSON.stringify(data));
   }
