@@ -30,7 +30,7 @@ function getParentRoomMembers(config, callback) {
   } else {
     url = config.server + '/api/v1/channels.members';
   }
-  
+
   $.ajax({
     url: url,
     dataType: 'json',
@@ -128,12 +128,8 @@ function postEMail(config, mail, callback) {
       }).done(function (response) {
         if (usageLogger) {
           sendToLog(config.server.replace(/.*\/\/([^.]+).*/, '$1'), config.userId, response.message.rid)
-            .done(function () {
-              callback(response);
-            });
-        } else {
-          callback(response);
         }
+        callback(response);
       }).fail(function (error) {
         callback(null, error);
       });
