@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://assistify.github.io/outlook-plugin/src/helper/login.html"/>
+        <SourceLocation DefaultValue="https://assistify.github.io/outlook-plugin/src/settings/login.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
