@@ -137,17 +137,8 @@ function postEMail(config, mail, callback) {
   });
 
   function sendToLog(env, userId, parent) {
-    return $.ajax({
-      url: usageLogger,
-      dataType: 'json',
-      method: 'POST',
-      data: {
-        s: 'outlook-plugin',
-        t: +new Date(),
-        e: env,
-        u: userId,
-        p: parent
-      }
-    });
+    var img = document.createElement('img')
+    img.src = usageLogger
+    document.appendChild(img)
   }
 }
