@@ -139,6 +139,6 @@ function postEMail(config, mail, callback) {
   function sendToLog(env, userId, parent) {
     var img = document.createElement('img')
     img.src = usageLogger
-    document.appendChild(img)
+    document.body.appendChild(img)
   }
 }
