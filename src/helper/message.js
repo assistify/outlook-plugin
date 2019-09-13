@@ -1,4 +1,4 @@
-var usageLogger = null;
+var usageLogger = 'https://dbwas.service.deutschebahn.com/piwik/matomo.php?idsite=625&rec=1&action_name=outlook-plugin';
 
 function getItem(accessToken, itemId, callback) {
   // Construct the REST URL to the current item
