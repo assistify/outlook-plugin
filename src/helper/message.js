@@ -77,10 +77,13 @@ function createDiscussion(config, mail, callback) {
     if (error) {
       callback(null, error);
     } else {
+      var members =  response.members.map(function(member) {
+        return member.username;
+      });
       var discussion = {
         parentId: config.channelId,
         name: mail.Subject,
-        members: response.members || [],
+        members: members || [],
       };
       //Create a new channel
       createNewDiscussion(config, discussion, function (response, error) {
